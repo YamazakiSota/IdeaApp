@@ -1,0 +1,6 @@
+framework module Pods_IdeaApp {
+  umbrella header "Pods-IdeaApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
