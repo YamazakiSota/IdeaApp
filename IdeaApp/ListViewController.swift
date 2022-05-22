@@ -24,6 +24,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var IdeaTitleArray: [String] = []
     var IdeaDetailArray: [String] = []
     var IdeaGenreArray: [String] = []
+    var NameIDArray: [String] = []
+    var NameArray: [String] = []
 
     var Genre: String = "アプリ"
     
@@ -34,12 +36,15 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         tableView.delegate = self
         tableView.dataSource = self
+        print("ccccc")
         // Do any additional setup after loading the view.
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
+        tableView.reloadData()
+        print("aaaaa")
             // ①ログイン済みかどうか確認
             if let user = Auth.auth().currentUser {
                 // ②ログインしているユーザー名の取得
@@ -54,23 +59,29 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 })
                 
                 
-                Firestore.firestore().collection("ideas").whereField("Genre", isEqualTo: Genre).order(by: "createdAt").addSnapshotListener({ (querySnapshot, error) in
+                Firestore.firestore().collection("ideas").whereField("Genre", isEqualTo: Genre).order(by: "createdAt",descending: true).addSnapshotListener({ (querySnapshot, error) in
                                 if let querySnapshot = querySnapshot {
                                     var idArray:[String] = []
                                     var titleArray:[String] = []
                                     var detailArray:[String] = []
                                     var genreArray:[String] = []
+                                    var nameidArray:[String] = []
+                                    var nameArray:[String] = []
                                     for doc in querySnapshot.documents {
                                         let data = doc.data()
                                         idArray.append(doc.documentID)
                                         titleArray.append(data["title"] as! String)
                                         detailArray.append(data["detail"] as! String)
                                         genreArray.append(data["Genre"] as! String)
+                                        nameidArray.append(data["UserID"] as! String)
+                                        nameArray.append(data["Name"] as! String)
                                     }
                                     self.IdeaIdArray = idArray
                                     self.IdeaTitleArray = titleArray
                                     self.IdeaDetailArray = detailArray
                                     self.IdeaGenreArray = genreArray
+                                    self.NameIDArray = nameidArray
+                                    self.NameArray = nameArray
                                     self.tableView.reloadData()
                                     
                                 } else if let error = error {
@@ -87,8 +98,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
-
             
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = IdeaTitleArray[indexPath.row]
@@ -113,6 +122,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             next.IdeaTitle = IdeaTitleArray[indexPath.row]
             next.IdeaDetail = IdeaDetailArray[indexPath.row]
             next.IdeaGenre = IdeaGenreArray[indexPath.row]
+            next.NameIDArray = NameIDArray[indexPath.row]
+            next.NameArray = NameArray[indexPath.row]
             self.present(next, animated: true, completion: nil)
         }
     
@@ -123,7 +134,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let storyboard: UIStoryboard = self.storyboard!
         let next = storyboard.instantiateViewController(withIdentifier: "NaviViewController")
         self.present(next, animated: true, completion: nil)
-        
+
     }
 
     
@@ -180,7 +191,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // FirestoreからTodoを取得する処理
     func getIdeaDataForFirestore() {
         if let user = Auth.auth().currentUser {
-            Firestore.firestore().collection("ideas").whereField("Genre", isEqualTo: Genre).order(by: "createdAt").addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+            Firestore.firestore().collection("ideas").whereField("Genre", isEqualTo: Genre).order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     var idArray:[String] = []
                     var titleArray:[String] = []

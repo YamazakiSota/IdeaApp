@@ -41,8 +41,6 @@ class AddViewController:FormViewController{
                 } else if let error = error {
                     print("ユーザー名取得失敗: " + error.localizedDescription)
                 }
-                //
-                //                print(self.UserName)
             })
         }
         
@@ -66,7 +64,7 @@ class AddViewController:FormViewController{
         }
         
         // ここからセクション2
-        +++ Section("ラベル")
+        +++ Section("分類")
         
         <<< AlertRow<String>("") {
             $0.title = "ジャンル"
@@ -96,7 +94,7 @@ class AddViewController:FormViewController{
         
         <<< LabelRow("名前"){ row in
             row.title =   "名前"
-            //row.value = "name"
+
         }.cellUpdate({ cell, row in
             row.value =   "\(self.UserName)"
             Username = row.value
@@ -107,6 +105,8 @@ class AddViewController:FormViewController{
          $0.title = "日付"
          $0.value = Date()
          }*/
+        
+        +++ Section("操作")
         
         <<< ButtonRow("Button2") {row in
             row.tag = "delete_row"
@@ -148,14 +148,14 @@ class AddViewController:FormViewController{
             }
         }
         
-        <<< ButtonRow() {
+        /*<<< ButtonRow() {
             $0.title = "Delete"
         }.cellSetup() {cell, row in
             
             cell.tintColor = UIColor.red
         }.onCellSelection {[unowned self] ButtonCellOf, row in
             //ボタンを押したときの処理
-        }
+        }*/
     }
     
     @IBAction func BackButton(){
