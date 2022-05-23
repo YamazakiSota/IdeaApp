@@ -27,6 +27,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var NameIDArray: [String] = []
     var NameArray: [String] = []
 
+    
+
     var Genre: String = "アプリ"
     
     
@@ -36,7 +38,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         tableView.delegate = self
         tableView.dataSource = self
-        print("ccccc")
         // Do any additional setup after loading the view.
     }
     
@@ -44,7 +45,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
         tableView.reloadData()
-        print("aaaaa")
+
             // ①ログイン済みかどうか確認
             if let user = Auth.auth().currentUser {
                 // ②ログインしているユーザー名の取得

@@ -53,7 +53,8 @@ class AddViewController:FormViewController{
         +++ Section("内容")
         <<< TextRow { row in
             row.title = "タイトル"
-            row.placeholder = "タイトルを入力"
+            row.placeholder = "12文字まで"
+            row.add(rule: RuleMaxLength(maxLength: 12))
         }.onChange{ row in
             IdeaTitle = row.value ?? "IdeaTitle"//変数に格納
         }
@@ -69,7 +70,7 @@ class AddViewController:FormViewController{
         <<< AlertRow<String>("") {
             $0.title = "ジャンル"
             $0.selectorTitle = "ジャンルを選択"
-            $0.options = ["アプリ","日用品","生活","エンタメ"]
+            $0.options = ["アプリ","日用品","生活","エンタメ","その他"]
             $0.value = "選択してください"    // 初期選択項目
         }.onChange{[unowned self] row in
             IdeaGenre = row.value ?? "選択なし"
