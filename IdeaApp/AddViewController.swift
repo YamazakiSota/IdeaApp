@@ -31,7 +31,7 @@ class AddViewController:FormViewController{
         var UserID: String?
         var Username: String?
         
-        var i: Int = 0
+        let i: Int = 0
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in

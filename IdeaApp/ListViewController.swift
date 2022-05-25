@@ -263,7 +263,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         genreArray.append(data["Genre"] as! String)
                         nameidArray.append(data["UserID"] as! String)
                         nameArray.append(data["Name"] as! String)
-                        likenumArray.append(["LikeNum"] as! Int)
+                        likenumArray.append(data["LikeNum"] as! Int)
                     }
                     self.IdeaIdArray = idArray
                     self.IdeaTitleArray = titleArray
