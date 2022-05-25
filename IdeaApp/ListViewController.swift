@@ -26,10 +26,11 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var IdeaGenreArray: [String] = []
     var NameIDArray: [String] = []
     var NameArray: [String] = []
+    var LikeIdArray: [String] = []
     
-    var DateArray : [Date] = []
+    var LikeNumArray : [Int] = []
     
-
+    var tem: Int = 0
     
 
     var Genre: String = "アプリ"
@@ -62,6 +63,26 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 })
                 
                 
+                if let user = Auth.auth().currentUser {
+                    Firestore.firestore().collection("users/\(user.uid)/likeidea").addSnapshotListener({(querySnapshot, error) in
+                        if let querySnapshot = querySnapshot {
+                            var LikeideaArray:[String] = []
+                            for doc in querySnapshot.documents {
+                                let data = doc.data()
+                                LikeideaArray.append(data["Likeidea"] as! String)
+                            }
+                            self.LikeIdArray = LikeideaArray
+
+                            self.tableView.reloadData()
+                        } else if let error = error {
+                            //row.value = false
+                            print("取得失敗: ddd" + error.localizedDescription)
+                            
+                        }
+                    })
+                }
+                
+                
                 Firestore.firestore().collection("ideas").whereField("Genre", isEqualTo: Genre).order(by: "createdAt",descending: true).addSnapshotListener({ (querySnapshot, error) in
                                 if let querySnapshot = querySnapshot {
                                     var idArray:[String] = []
@@ -70,7 +91,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                     var genreArray:[String] = []
                                     var nameidArray:[String] = []
                                     var nameArray:[String] = []
-                                    var dataArray:[Data] = []
+                                    var likenumArray:[Int] = []
                                     
                                     for doc in querySnapshot.documents {
                                         let data = doc.data()
@@ -86,6 +107,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                 genreArray.append(data["Genre"] as! String)
                                                 nameidArray.append(data["UserID"] as! String)
                                                 nameArray.append(data["Name"] as! String)
+                                                likenumArray.append(data["LikeNum"] as! Int)
                                                 
                                                 
                                                 self.IdeaIdArray = idArray
@@ -94,6 +116,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                 self.IdeaGenreArray = genreArray
                                                 self.NameIDArray = nameidArray
                                                 self.NameArray = nameArray
+                                                self.LikeNumArray = likenumArray
                                                 self.tableView.reloadData()
                                                 
                                             }
@@ -146,7 +169,17 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             next.IdeaGenre = IdeaGenreArray[indexPath.row]
             next.NameIDArray = NameIDArray[indexPath.row]
             next.NameArray = NameArray[indexPath.row]
+            next.LikeNumArray = LikeNumArray[indexPath.row]
+            
+            for i in self.LikeIdArray{
+                if(i == self.IdeaIdArray[indexPath.row]){
+                    self.tem = 1
+                }else {
+                self.tem = 0
+            }
+            next.tem = tem
             self.present(next, animated: true, completion: nil)
+        }
         }
     
 
@@ -221,6 +254,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     var genreArray:[String] = []
                     var nameidArray:[String] = []
                     var nameArray:[String] = []
+                    var likenumArray:[Int] = []
                     for doc in querySnapshot.documents {
                         let data = doc.data()
                         idArray.append(doc.documentID)
@@ -229,7 +263,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         genreArray.append(data["Genre"] as! String)
                         nameidArray.append(data["UserID"] as! String)
                         nameArray.append(data["Name"] as! String)
-                        print("ああああああ")
+                        likenumArray.append(["LikeNum"] as! Int)
                     }
                     self.IdeaIdArray = idArray
                     self.IdeaTitleArray = titleArray
@@ -237,11 +271,31 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.IdeaGenreArray = genreArray
                     self.NameIDArray = nameidArray
                     self.NameArray = nameArray
+                    self.LikeNumArray = likenumArray
                     print(self.IdeaTitleArray)
                     self.tableView.reloadData()
                     
                 } else if let error = error {
                     print("取得失敗: ccc" + error.localizedDescription)
+                }
+            })
+        }
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users/\(user.uid)/likeidea").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var LikeideaArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        LikeideaArray.append(data["Likeidea"] as! String)
+                    }
+                    self.LikeIdArray = LikeideaArray
+
+                    self.tableView.reloadData()
+                } else if let error = error {
+                    //row.value = false
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
                 }
             })
         }

@@ -31,6 +31,8 @@ class AddViewController:FormViewController{
         var UserID: String?
         var Username: String?
         
+        var i: Int = 0
+        
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
                 if let snap = snapshot {
@@ -129,7 +131,8 @@ class AddViewController:FormViewController{
                                 "updatedAt": createdTime,
                                 "Genre": Genre,
                                 "Name": name,
-                                "UserID": Auth.auth().currentUser?.uid
+                                "UserID": Auth.auth().currentUser?.uid,
+                                "LikeNum": i
                             ],merge: true
                             ,completion: { error in
                                 if let error = error {

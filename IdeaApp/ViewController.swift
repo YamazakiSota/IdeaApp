@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var RegisterNameTextField: UITextField!
     
     
+    var Idea: String = "XXX"
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,23 @@ class ViewController: UIViewController {
                             let next = storyboard.instantiateViewController(withIdentifier: "ListViewController")
                             self.present(next, animated: true, completion: nil)
                         }
+                    })
+                        
+                        Firestore.firestore().collection("users/\(user.uid)/likeidea").document().setData(
+                            [   "Likeidea": self.Idea,
+                            ],merge: true
+                            ,completion: { error in
+                                if let error = error {
+                                    // ③が失敗した場合
+                                    print("アイデア投稿失敗: " + error.localizedDescription)
+                                    let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(dialog, animated: true, completion: nil)
+                                } else {
+                                    print("idea作成成功")
+                                    // ④Todo一覧画面に戻る
+                                }
+                            
                     })
                 } else if let error = error {
                     // ①が失敗した場合

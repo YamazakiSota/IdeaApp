@@ -19,18 +19,19 @@ class EditViewController: FormViewController {
     var IdeaGenre: String!
     var NameIDArray: String!
     var NameArray: String!
+    var LikeNumArray: Int!
+    var tem: Int!
+    
+    var LikeIdArray: [String] = []
+    
     
     
     var taitoru: String = ""
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        var IdeaIdin: String?
-        var IdeaTitlein: String?
-        var IdeaDetailin: String?
-        var IdeaGenrein: String?
         
         
         
@@ -75,20 +76,19 @@ class EditViewController: FormViewController {
                 
                 cell.tintColor = UIColor.red
             }.onCellSelection {[unowned self] ButtonCellOf, row in
-                if let user = Auth.auth().currentUser {
-                    Firestore.firestore().collection("ideas").document(IdeaId).delete(){ error in
-                        if let error = error {
-                            print("TODO削除失敗: " + error.localizedDescription)
-                            let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
-                            dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(dialog, animated: true, completion: nil)
-                        } else {
-                            print("TODO削除成功")
-                            self.dismiss(animated: true, completion: nil)
-                        }
+                Firestore.firestore().collection("ideas").document(IdeaId).delete(){ error in
+                    if let error = error {
+                        print("TODO削除失敗: " + error.localizedDescription)
+                        let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                        dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(dialog, animated: true, completion: nil)
+                    } else {
+                        print("TODO削除成功")
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
             }
+            
             
             <<< ButtonRow() {
                 $0.title = "戻る"
@@ -103,6 +103,7 @@ class EditViewController: FormViewController {
             
         }else {
             //他の人の投稿
+            
             
             form
             // ここからセクション1
@@ -133,8 +134,8 @@ class EditViewController: FormViewController {
                 row.value =   "\(NameArray!)"
             }
             
-            +++ Section("操作")
             
+            +++ Section("情報")
             
             <<< ButtonRow() {
                 $0.title = "ブロック"
@@ -161,12 +162,111 @@ class EditViewController: FormViewController {
             }.onCellSelection {[unowned self] ButtonCellOf, row in
                 self.dismiss(animated: true, completion: nil)
             }
+
             
             
+            +++ Section("いいね")
             
+            <<< SwitchRow(){ row in
+                row.title = "欲しい"
+                
+                
+                
+                if(self.tem == 0){
+                    row.value = false
+                }else{
+                    row.value = true
+                }
+                
+                
+                
+            }.onChange{[unowned self] row in
+                if row.value! == true{
+                    
+                    
+                    self.LikeNumArray! += 1
+                    
+                    if let user = Auth.auth().currentUser {
+                        Firestore.firestore().collection("users/\(user.uid)/likeidea").document().setData(
+                            [   "Likeidea": IdeaId!,
+                            ],merge: true
+                            ,completion: { error in
+                                if let error = error {
+                                    // ③が失敗した場合
+                                    print("アイデア投稿失敗: " + error.localizedDescription)
+                                    let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(dialog, animated: true, completion: nil)
+                                } else {
+                                    print("idea作成成功")
+                                    // ④Todo一覧画面に戻る
+                                }
+                            })
+                    }
+                    
+                    Firestore.firestore().collection("ideas").document(IdeaId!).setData(
+                        [   "LikeNum": LikeNumArray!,
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO作成成功")
+                                // ④Todo一覧画面に戻る
+                            }
+                        })
+                    
+                    
+                    
+                    
+                    
+                }else{
+                    self.LikeNumArray! -= 1
+                    
+                    
+                    Firestore.firestore().collection("ideas").document(IdeaId!).setData(
+                        [   "LikeNum": LikeNumArray!,
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO作成成功")
+                                // ④Todo一覧画面に戻る
+                            }
+                        })
+                    
+                    
+                    if let user = Auth.auth().currentUser {
+                        Firestore.firestore().collection("users/\(user.uid)/likeidea").document().delete(){ error in
+                            if let error = error {
+                                print("TODO削除失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO削除成功")
+                                
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                
+            }
         }
-        
     }
+    
+    
     
     
     
