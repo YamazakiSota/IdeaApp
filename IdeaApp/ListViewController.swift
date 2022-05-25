@@ -27,6 +27,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var NameIDArray: [String] = []
     var NameArray: [String] = []
 
+
     
 
     var Genre: String = "アプリ"
@@ -44,8 +45,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-        tableView.reloadData()
-
+            
             // ①ログイン済みかどうか確認
             if let user = Auth.auth().currentUser {
                 // ②ログインしているユーザー名の取得
@@ -70,26 +70,41 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                     var nameArray:[String] = []
                                     for doc in querySnapshot.documents {
                                         let data = doc.data()
-                                        idArray.append(doc.documentID)
-                                        titleArray.append(data["title"] as! String)
-                                        detailArray.append(data["detail"] as! String)
-                                        genreArray.append(data["Genre"] as! String)
-                                        nameidArray.append(data["UserID"] as! String)
-                                        nameArray.append(data["Name"] as! String)
+                                        
+                                        let blockList:[String:Bool] = UserDefaults.standard.object(forKey: "blocked") as! [String:Bool]
+                                        if let dataid = data["UserID"]{
+                                            if let bloclFlag = blockList["\(dataid)"],bloclFlag == true{
+                                                //ブロックリストの中のuserの投稿の場合は配列に追加しない
+                                                print("aaa")
+                                            }else{
+                                                idArray.append(doc.documentID)
+                                                titleArray.append(data["title"] as! String)
+                                                detailArray.append(data["detail"] as! String)
+                                                genreArray.append(data["Genre"] as! String)
+                                                nameidArray.append(data["UserID"] as! String)
+                                                nameArray.append(data["Name"] as! String)
+                                                
+                                                self.IdeaIdArray = idArray
+                                                self.IdeaTitleArray = titleArray
+                                                self.IdeaDetailArray = detailArray
+                                                self.IdeaGenreArray = genreArray
+                                                self.NameIDArray = nameidArray
+                                                self.NameArray = nameArray
+                                                self.tableView.reloadData()
+                                                
+                                            }
+                                        }
+
                                     }
-                                    self.IdeaIdArray = idArray
-                                    self.IdeaTitleArray = titleArray
-                                    self.IdeaDetailArray = detailArray
-                                    self.IdeaGenreArray = genreArray
-                                    self.NameIDArray = nameidArray
-                                    self.NameArray = nameArray
-                                    self.tableView.reloadData()
+
                                     
                                 } else if let error = error {
-                                    print("TODO取得失敗: " + error.localizedDescription)
+                                    print("取得失敗: bbb" + error.localizedDescription)
                                 }
                             })
                     }
+        
+        tableView.reloadData()
         }
         
     
@@ -99,6 +114,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            
             
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = IdeaTitleArray[indexPath.row]
@@ -213,7 +229,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.tableView.reloadData()
                     
                 } else if let error = error {
-                    print("TODO取得失敗: " + error.localizedDescription)
+                    print("取得失敗: ccc" + error.localizedDescription)
                 }
             })
         }
