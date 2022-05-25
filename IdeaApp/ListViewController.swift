@@ -70,7 +70,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                     var nameArray:[String] = []
                                     for doc in querySnapshot.documents {
                                         let data = doc.data()
-                                        
                                         let blockList:[String:Bool] = UserDefaults.standard.object(forKey: "blocked") as! [String:Bool]
                                         if let dataid = data["UserID"]{
                                             if let bloclFlag = blockList["\(dataid)"],bloclFlag == true{
@@ -102,9 +101,10 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                     print("取得失敗: bbb" + error.localizedDescription)
                                 }
                             })
+                
+                
                     }
         
-        tableView.reloadData()
         }
         
     
@@ -214,17 +214,24 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     var titleArray:[String] = []
                     var detailArray:[String] = []
                     var genreArray:[String] = []
+                    var nameidArray:[String] = []
+                    var nameArray:[String] = []
                     for doc in querySnapshot.documents {
                         let data = doc.data()
                         idArray.append(doc.documentID)
                         titleArray.append(data["title"] as! String)
                         detailArray.append(data["detail"] as! String)
                         genreArray.append(data["Genre"] as! String)
+                        nameidArray.append(data["UserID"] as! String)
+                        nameArray.append(data["Name"] as! String)
+                        print("ああああああ")
                     }
                     self.IdeaIdArray = idArray
                     self.IdeaTitleArray = titleArray
                     self.IdeaDetailArray = detailArray
                     self.IdeaGenreArray = genreArray
+                    self.NameIDArray = nameidArray
+                    self.NameArray = nameArray
                     print(self.IdeaTitleArray)
                     self.tableView.reloadData()
                     
