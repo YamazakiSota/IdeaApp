@@ -26,7 +26,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var IdeaGenreArray: [String] = []
     var NameIDArray: [String] = []
     var NameArray: [String] = []
-
+    
+    var DateArray : [Date] = []
+    
 
     
 
@@ -68,6 +70,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                     var genreArray:[String] = []
                                     var nameidArray:[String] = []
                                     var nameArray:[String] = []
+                                    var dataArray:[Data] = []
+                                    
                                     for doc in querySnapshot.documents {
                                         let data = doc.data()
                                         let blockList:[String:Bool] = UserDefaults.standard.object(forKey: "blocked") as! [String:Bool]
@@ -82,6 +86,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                 genreArray.append(data["Genre"] as! String)
                                                 nameidArray.append(data["UserID"] as! String)
                                                 nameArray.append(data["Name"] as! String)
+                                                
                                                 
                                                 self.IdeaIdArray = idArray
                                                 self.IdeaTitleArray = titleArray
@@ -118,7 +123,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = IdeaTitleArray[indexPath.row]
-            cell.detailTextLabel?.text = IdeaDetailArray[indexPath.row]
+            cell.detailTextLabel?.text = NameArray[indexPath.row]
             
             cell.textLabel?.font = UIFont(name: "Arial", size: 20)
             cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
