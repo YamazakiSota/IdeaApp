@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     
     
     var Idea: String = "XXX"
+    var BlockUser: String = "YYY"
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,22 @@ class ViewController: UIViewController {
                                 }
                             
                     })
+                    
+                    Firestore.firestore().collection("users/\(user.uid)/blockuser").document().setData(
+                        [   "blockuser": self.BlockUser,
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                            } else {
+                                print("idea作成成功")
+                                // ④Todo一覧画面に戻る
+                            }
+                        
+                })
+                    
+                    
                 } else if let error = error {
                     // ①が失敗した場合
                     print("Firebase Auth 新規登録失敗 " + error.localizedDescription)

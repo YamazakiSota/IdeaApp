@@ -211,7 +211,7 @@
                                     <segment title="ほしい順"/>
                                 </segments>
                                 <connections>
-                                    <action selector="changeOrderControl:" destination="857-US-h7C" eventType="touchUpInside" id="T1A-NN-AAO"/>
+                                    <action selector="changeOrderControl:" destination="857-US-h7C" eventType="valueChanged" id="qiE-pi-k28"/>
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ECm-HE-DS1">
@@ -275,6 +275,7 @@
                     <connections>
                         <outlet property="Label1" destination="HCN-Sv-Ksp" id="cSc-YJ-XQ8"/>
                         <outlet property="ListSegmentedControl" destination="ECm-HE-DS1" id="OEP-LS-kII"/>
+                        <outlet property="OrderSegmentedControl" destination="Vdf-oy-4yc" id="OmU-iR-XHR"/>
                         <outlet property="tableView" destination="QTM-iP-yfg" id="14K-4s-2dR"/>
                     </connections>
                 </viewController>

@@ -123,7 +123,7 @@ class AddViewController:FormViewController{
                     if let user = Auth.auth().currentUser {
                         // ③FirestoreにTodoデータを作成する
                         let createdTime = FieldValue.serverTimestamp()
-                        Firestore.firestore().collection("ideas").document().setData(
+                        Firestore.firestore().collection("\(Genre)ideas").document().setData(
                             [
                                 "title": title,
                                 "detail": detail,
