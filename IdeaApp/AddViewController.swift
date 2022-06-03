@@ -31,7 +31,10 @@ class AddViewController:FormViewController{
         var UserID: String?
         var Username: String?
         
+        let Timedate = "\(year)年\(month)月\(day)日"
+        
         let i: Int = 0
+        let j: Int = 0
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
@@ -120,19 +123,19 @@ class AddViewController:FormViewController{
                 if let title = IdeaTitle,
                    let detail = IdeaDetail, let Genre = IdeaGenre, let name = Username{
                     // ②ログイン済みか確認
-                    if let user = Auth.auth().currentUser {
                         // ③FirestoreにTodoデータを作成する
                         let createdTime = FieldValue.serverTimestamp()
-                        Firestore.firestore().collection("\(Genre)ideas").document().setData(
+                        Firestore.firestore().collection("\(Genre)のideas").document().setData(
                             [
                                 "title": title,
                                 "detail": detail,
                                 "createdAt": createdTime,
-                                "updatedAt": createdTime,
+                                "updatedAt": Timedate,
                                 "Genre": Genre,
                                 "Name": name,
                                 "UserID": Auth.auth().currentUser?.uid,
-                                "LikeNum": i
+                                "LikeNum": i,
+                                "ReportNum": j
                             ],merge: true
                             ,completion: { error in
                                 if let error = error {
@@ -147,7 +150,7 @@ class AddViewController:FormViewController{
                                     self.dismiss(animated: true, completion: nil)
                                 }
                             })
-                    }
+                    
                 }
             }
         }
