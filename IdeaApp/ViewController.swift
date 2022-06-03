@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     
     var Idea: String = "XXX"
     var BlockUser: String = "YYY"
+    var ReportIdea: String = "ZZZ"
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +91,20 @@ class ViewController: UIViewController {
                         
                 })
                     
+                    Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
+                        [   "ReportIdea": self.ReportIdea,
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                            } else {
+                                print("idea作成成功")
+                                // ④Todo一覧画面に戻る
+                            }
+                        
+                })
+
                     
                 } else if let error = error {
                     // ①が失敗した場合

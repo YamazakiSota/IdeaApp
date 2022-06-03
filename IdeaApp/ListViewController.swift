@@ -31,7 +31,13 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var UserLikeIdArray: [String] = []
     var BlockUserArray: [String] = []
     var BlockUserIdArray: [String] = []
-    var LikeNumArray : [Int] = []
+    var ReportIdeaArray: [String] = []
+    var ReportIdeaIDArray: [String] = []
+    var LikeNumArray: [Int] = []
+    var ReportNumArray: [Int] = []
+    var CommentArray: [String] = []
+    var CommentNameArray: [String] = []
+    var TimeArray: [String] = []
     
     var tem: Int = 0
     var k: Int = 0
@@ -39,6 +45,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var sc: Int = 0
     
     var Genre: String = "アプリ"
+    
     
     
     
@@ -57,6 +64,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //OrderSegmentedControl.selectedSegmentIndex = 0
+        //sc = 0
         
         
         // ①ログイン済みかどうか確認
@@ -71,7 +80,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     print("ユーザー名取得失敗: " + error.localizedDescription)
                 }
             })
-            
+        }
             
             if let user = Auth.auth().currentUser {
                 Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
@@ -92,6 +101,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 })
             }
+            
+            
             
             if let user = Auth.auth().currentUser {
                 Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
@@ -114,10 +125,30 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 })
             }
             
-            
-            
-            
-            Firestore.firestore().collection("\(Genre)ideas").order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("reportidea").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var reportideaArray:[String] = []
+                    var reportideaidArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        reportideaidArray.append(doc.documentID)
+                        reportideaArray.append(data["ReportIdea"] as! String)
+                    }
+                    self.ReportIdeaArray = reportideaArray
+                    self.ReportIdeaIDArray = reportideaidArray
+                    
+                } else if let error = error {
+                    //row.value = false
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+
+        
+        if(sc == 0){
+            Firestore.firestore().collection("\(Genre)のideas").order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{(querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     var idArray:[String] = []
                     var titleArray:[String] = []
@@ -126,6 +157,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     var nameidArray:[String] = []
                     var nameArray:[String] = []
                     var likenumArray:[Int] = []
+                    var timeArray:[String] = []
+                    var reportnumArray:[Int] = []
+                    
                     for doc in querySnapshot.documents {
                         let data = doc.data()
                         
@@ -146,6 +180,12 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                             nameidArray.append(data["UserID"] as! String)
                             nameArray.append(data["Name"] as! String)
                             likenumArray.append(data["LikeNum"] as! Int)
+                            reportnumArray.append(data["ReportNum"] as! Int)
+                            timeArray.append(data["updatedAt"] as! String)
+                            //let createtime = data["createdAt"] as! Timestamp
+                            //let dateVal = createtime.dateValue()
+                            //print(createtime)
+                            //timeArray.append("\(dateVal)")
                         }
                         
                     }
@@ -156,16 +196,74 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.NameIDArray = nameidArray
                     self.NameArray = nameArray
                     self.LikeNumArray = likenumArray
-                    print(self.IdeaTitleArray)
+                    self.TimeArray = timeArray
+                    self.ReportNumArray = reportnumArray
                     self.tableView.reloadData()
                 } else if let error = error {
                     print("取得失敗: ccc" + error.localizedDescription)
                 }
             })
+        }else{
+            Firestore.firestore().collection("\(Genre)のideas").order(by: "LikeNum",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var idArray:[String] = []
+                    var titleArray:[String] = []
+                    var detailArray:[String] = []
+                    var genreArray:[String] = []
+                    var nameidArray:[String] = []
+                    var nameArray:[String] = []
+                    var likenumArray:[Int] = []
+                    var reportnumArray:[Int] = []
+                    var timeArray:[String] = []
+                    
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        
+                        for i in self.BlockUserArray{
+                            if(i == data["UserID"] as! String){
+                                self.s = 1
+                                break
+                            }
+                            else{
+                                self.s = 0
+                            }
+                        }
+                        if (self.s == 0){
+                            idArray.append(doc.documentID)
+                            titleArray.append(data["title"] as! String)
+                            detailArray.append(data["detail"] as! String)
+                            genreArray.append(data["Genre"] as! String)
+                            nameidArray.append(data["UserID"] as! String)
+                            nameArray.append(data["Name"] as! String)
+                            likenumArray.append(data["LikeNum"] as! Int)
+                            reportnumArray.append(data["ReportNum"] as! Int)
+                            timeArray.append(data["updatedAt"] as! String)
+                            //let createtime = data["createdAt"] as! Timestamp
+                            //let dateVal = createtime.dateValue()
+                            //print(createtime)
+                            //timeArray.append("\(dateVal)")
+                        }
+                        
+                    }
+                    self.IdeaIdArray = idArray
+                    self.IdeaTitleArray = titleArray
+                    self.IdeaDetailArray = detailArray
+                    self.IdeaGenreArray = genreArray
+                    self.NameIDArray = nameidArray
+                    self.NameArray = nameArray
+                    self.LikeNumArray = likenumArray
+                    self.TimeArray = timeArray
+                    self.ReportNumArray = reportnumArray
+                    self.tableView.reloadData()
+                    print("aoaoaoaoao")
+                } else if let error = error {
+                    print("取得失敗: ccc" + error.localizedDescription)
+                }
+            })
+        }
             
         }
-        
-    }
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,12 +276,25 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
-        if(sc == 0){
-            cell.detailTextLabel?.text = NameArray[indexPath.row]
-        }else{
-            cell.detailTextLabel?.text = "欲しい数\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
-        }
-        
+            if(sc == 0){
+                /*let newstr = TimeArray[indexPath.row].filter("0123456789".contains)//202205171630
+                let year = newstr.prefix(4)//20220517
+                let yearno = newstr.dropFirst(4)
+                var month = yearno.prefix(2)
+                let monthno = yearno.dropFirst(2)
+                var day = Int(monthno.prefix(2))
+                let dayno = monthno.dropFirst(2)
+                var hour = Int(dayno.prefix(2))
+                
+                if(hour! > 15){
+                    day = day! + 1
+                }*/
+                
+                cell.detailTextLabel?.text = "作成日：\(TimeArray[indexPath.row])" + NameArray[indexPath.row]
+            }else{
+                cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+            }
+            
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
@@ -193,6 +304,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
         return 80
     }
     
@@ -207,6 +319,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         next.NameIDArray = NameIDArray[indexPath.row]
         next.NameArray = NameArray[indexPath.row]
         next.LikeNumArray = LikeNumArray[indexPath.row]
+        next.ReportNumArray = ReportNumArray[indexPath.row]
         
         self.k = 0
         for i in self.LikeIdArray{
@@ -221,7 +334,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 k += 1
             }
         }
-        
         self.present(next, animated: true, completion: nil)
     }
     
@@ -306,89 +418,187 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-        
-        @IBAction func changeOrderControl(_ sender: UISegmentedControl){
-            switch sender.selectedSegmentIndex {
-            case 0:
-                getIdeaDataForFirestore()
-                sc = 0
-            case 1:
-                getIdeaDataForFirestoreNum()
-                sc = 1
-            default:
-                getIdeaDataForFirestore()
-                sc = 0
-            }
-            
+    
+    @IBAction func changeOrderControl(_ sender: UISegmentedControl){
+        switch sender.selectedSegmentIndex {
+        case 0:
+            getIdeaDataForFirestore()
+            sc = 0
+        case 1:
+            getIdeaDataForFirestoreNum()
+            sc = 1
+        default:
+            getIdeaDataForFirestore()
+            sc = 0
         }
         
-        // FirestoreからTodoを取得する処理
-        func getIdeaDataForFirestore() {
-            
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var LikeideaArray:[String] = []
-                        var UserlikeideaArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            UserlikeideaArray.append(doc.documentID)
-                            LikeideaArray.append(data["Likeidea"] as! String)
-                        }
-                        self.LikeIdArray = LikeideaArray
-                        self.UserLikeIdArray = UserlikeideaArray
-                    } else if let error = error {
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
-                    }
-                })
-            }
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var blockuserArray:[String] = []
-                        var blockuseridArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            blockuseridArray.append(doc.documentID)
-                            blockuserArray.append(data["blockuser"] as! String)
-                        }
-                        self.BlockUserArray = blockuserArray
-                        self.BlockUserIdArray = blockuseridArray
-                        
-                    } else if let error = error {
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
-                    }
-                })
-            }
-            
-            
-            
-            Firestore.firestore().collection("\(Genre)ideas").order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+    }
+    
+    // FirestoreからTodoを取得する処理
+    func getIdeaDataForFirestore() {
+        
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
-                    var idArray:[String] = []
-                    var titleArray:[String] = []
-                    var detailArray:[String] = []
-                    var genreArray:[String] = []
-                    var nameidArray:[String] = []
-                    var nameArray:[String] = []
-                    var likenumArray:[Int] = []
+                    var LikeideaArray:[String] = []
+                    var UserlikeideaArray:[String] = []
                     for doc in querySnapshot.documents {
                         let data = doc.data()
-                        
-                        for i in self.BlockUserArray{
-                            if(i == data["UserID"] as! String){
-                                self.s = 1
-                                break
-                            }
-                            else{
-                                self.s = 0
-                            }
+                        UserlikeideaArray.append(doc.documentID)
+                        LikeideaArray.append(data["Likeidea"] as! String)
+                    }
+                    self.LikeIdArray = LikeideaArray
+                    self.UserLikeIdArray = UserlikeideaArray
+                } else if let error = error {
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var blockuserArray:[String] = []
+                    var blockuseridArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        blockuseridArray.append(doc.documentID)
+                        blockuserArray.append(data["blockuser"] as! String)
+                    }
+                    self.BlockUserArray = blockuserArray
+                    self.BlockUserIdArray = blockuseridArray
+                    
+                } else if let error = error {
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
+        
+        
+        Firestore.firestore().collection("\(Genre)のideas").order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+                var idArray:[String] = []
+                var titleArray:[String] = []
+                var detailArray:[String] = []
+                var genreArray:[String] = []
+                var nameidArray:[String] = []
+                var nameArray:[String] = []
+                var likenumArray:[Int] = []
+                var timeArray:[String] = []
+                var reportnumArray:[Int] = []
+                for doc in querySnapshot.documents {
+                    let data = doc.data()
+                    
+                    for i in self.BlockUserArray{
+                        if(i == data["UserID"] as! String){
+                            self.s = 1
+                            break
                         }
-                        if (self.s == 0){
+                        else{
+                            self.s = 0
+                        }
+                    }
+                    if (self.s == 0){
+                        idArray.append(doc.documentID)
+                        titleArray.append(data["title"] as! String)
+                        detailArray.append(data["detail"] as! String)
+                        genreArray.append(data["Genre"] as! String)
+                        nameidArray.append(data["UserID"] as! String)
+                        nameArray.append(data["Name"] as! String)
+                        likenumArray.append(data["LikeNum"] as! Int)
+                        timeArray.append(data["updatedAt"] as! String)
+                        reportnumArray.append(data["ReportNum"] as! Int)
+                    }
+                    
+                }
+                self.IdeaIdArray = idArray
+                self.IdeaTitleArray = titleArray
+                self.IdeaDetailArray = detailArray
+                self.IdeaGenreArray = genreArray
+                self.NameIDArray = nameidArray
+                self.NameArray = nameArray
+                self.LikeNumArray = likenumArray
+                self.TimeArray = timeArray
+                self.ReportNumArray = reportnumArray
+                print(self.IdeaTitleArray)
+                self.tableView.reloadData()
+            } else if let error = error {
+                print("取得失敗: ccc" + error.localizedDescription)
+            }
+        })
+        
+        
+        
+        
+    }
+    
+    func getIdeaDataForFirestoreNum() {
+        
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var LikeideaArray:[String] = []
+                    var UserlikeideaArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        UserlikeideaArray.append(doc.documentID)
+                        LikeideaArray.append(data["Likeidea"] as! String)
+                    }
+                    self.LikeIdArray = LikeideaArray
+                    self.UserLikeIdArray = UserlikeideaArray
+                } else if let error = error {
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var blockuserArray:[String] = []
+                    var blockuseridArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        blockuseridArray.append(doc.documentID)
+                        blockuserArray.append(data["blockuser"] as! String)
+                    }
+                    self.BlockUserArray = blockuserArray
+                    self.BlockUserIdArray = blockuseridArray
+                    
+                } else if let error = error {
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
+        
+        
+        Firestore.firestore().collection("\(Genre)のideas").order(by: "LikeNum",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+                var idArray:[String] = []
+                var titleArray:[String] = []
+                var detailArray:[String] = []
+                var genreArray:[String] = []
+                var nameidArray:[String] = []
+                var nameArray:[String] = []
+                var likenumArray:[Int] = []
+                var timeArray:[String] = []
+                var reportnumArray:[Int] = []
+                for doc in querySnapshot.documents {
+                    let data = doc.data()
+                    
+                    for i in self.BlockUserArray{
+                        if(i == data["UserID"] as! String){
+                            
+                        }
+                        else{
                             idArray.append(doc.documentID)
                             titleArray.append(data["title"] as! String)
                             detailArray.append(data["detail"] as! String)
@@ -396,129 +606,43 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                             nameidArray.append(data["UserID"] as! String)
                             nameArray.append(data["Name"] as! String)
                             likenumArray.append(data["LikeNum"] as! Int)
+                            timeArray.append(data["updatedAt"] as! String)
+                            reportnumArray.append(data["ReportNum"] as! Int)
                         }
-                        
                     }
-                    self.IdeaIdArray = idArray
-                    self.IdeaTitleArray = titleArray
-                    self.IdeaDetailArray = detailArray
-                    self.IdeaGenreArray = genreArray
-                    self.NameIDArray = nameidArray
-                    self.NameArray = nameArray
-                    self.LikeNumArray = likenumArray
-                    print(self.IdeaTitleArray)
-                    self.tableView.reloadData()
-                } else if let error = error {
-                    print("取得失敗: ccc" + error.localizedDescription)
+                    
                 }
-            })
-            
-            
-            
-            
-        }
-        
-        func getIdeaDataForFirestoreNum() {
-            
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var LikeideaArray:[String] = []
-                        var UserlikeideaArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            UserlikeideaArray.append(doc.documentID)
-                            LikeideaArray.append(data["Likeidea"] as! String)
-                        }
-                        self.LikeIdArray = LikeideaArray
-                        self.UserLikeIdArray = UserlikeideaArray
-                    } else if let error = error {
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
-                    }
-                })
+                self.IdeaIdArray = idArray
+                self.IdeaTitleArray = titleArray
+                self.IdeaDetailArray = detailArray
+                self.IdeaGenreArray = genreArray
+                self.NameIDArray = nameidArray
+                self.NameArray = nameArray
+                self.LikeNumArray = likenumArray
+                self.TimeArray = timeArray
+                self.ReportNumArray = reportnumArray
+                print(self.IdeaTitleArray)
+                self.tableView.reloadData()
+            } else if let error = error {
+                print("取得失敗: ccc" + error.localizedDescription)
             }
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var blockuserArray:[String] = []
-                        var blockuseridArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            blockuseridArray.append(doc.documentID)
-                            blockuserArray.append(data["blockuser"] as! String)
-                        }
-                        self.BlockUserArray = blockuserArray
-                        self.BlockUserIdArray = blockuseridArray
-                        
-                    } else if let error = error {
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
-                    }
-                })
-            }
-            
-            
-            
-            Firestore.firestore().collection("\(Genre)ideas").order(by: "LikeNum",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
-                if let querySnapshot = querySnapshot {
-                    var idArray:[String] = []
-                    var titleArray:[String] = []
-                    var detailArray:[String] = []
-                    var genreArray:[String] = []
-                    var nameidArray:[String] = []
-                    var nameArray:[String] = []
-                    var likenumArray:[Int] = []
-                    for doc in querySnapshot.documents {
-                        let data = doc.data()
-                        
-                        for i in self.BlockUserArray{
-                            if(i == data["UserID"] as! String){
-                                
-                            }
-                            else{
-                                idArray.append(doc.documentID)
-                                titleArray.append(data["title"] as! String)
-                                detailArray.append(data["detail"] as! String)
-                                genreArray.append(data["Genre"] as! String)
-                                nameidArray.append(data["UserID"] as! String)
-                                nameArray.append(data["Name"] as! String)
-                                likenumArray.append(data["LikeNum"] as! Int)
-                            }
-                        }
-                        
-                    }
-                    self.IdeaIdArray = idArray
-                    self.IdeaTitleArray = titleArray
-                    self.IdeaDetailArray = detailArray
-                    self.IdeaGenreArray = genreArray
-                    self.NameIDArray = nameidArray
-                    self.NameArray = nameArray
-                    self.LikeNumArray = likenumArray
-                    print(self.IdeaTitleArray)
-                    self.tableView.reloadData()
-                } else if let error = error {
-                    print("取得失敗: ccc" + error.localizedDescription)
-                }
-            })
-            
-            
-            
-            
-        }
+        })
         
         
         
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
         
     }
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
