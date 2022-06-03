@@ -174,6 +174,7 @@ class EditViewController: FormViewController {
         }else {
             //他の人の投稿
             
+           
             
             
             form

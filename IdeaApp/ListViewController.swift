@@ -370,6 +370,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
+    
     @IBAction func ChangeListControl(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {

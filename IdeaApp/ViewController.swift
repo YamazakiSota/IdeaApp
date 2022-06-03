@@ -91,6 +91,7 @@ class ViewController: UIViewController {
                         
                 })
                     
+                    
                     Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
                         [   "ReportIdea": self.ReportIdea,
                         ],merge: true
