@@ -762,6 +762,8 @@ PODS:
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
   - GTMSessionFetcher/Core (1.7.2)
+  - ImageRow (4.1.0):
+    - Eureka (~> 5.3.5)
   - IQKeyboardManagerSwift (6.5.10)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
@@ -782,6 +784,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - ImageRow (~> 4.0)
   - IQKeyboardManagerSwift
 
 SPEC REPOS:
@@ -803,6 +806,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - ImageRow
     - IQKeyboardManagerSwift
     - leveldb-library
     - Libuv-gRPC
@@ -827,12 +831,13 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  ImageRow: 880c0f052c5a89c80521b485c86ccf723a124e99
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
 
-PODFILE CHECKSUM: c1ebae6066cf0eceefc7b5a8d3a6138dda00a9d9
+PODFILE CHECKSUM: 70f6899da521fdbcaaf086793464c0b89867eae1
 
 COCOAPODS: 1.11.3

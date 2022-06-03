@@ -7,6 +7,7 @@ target 'IdeaApp' do
 
   # Pods for IdeaApp
  pod 'Eureka'
+ pod 'ImageRow', '~> 4.0'
  pod 'Firebase/Core'
  pod 'Firebase/Auth'
  pod 'Firebase/Firestore'

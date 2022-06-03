@@ -18,7 +18,6 @@
 		E4E965D728340CB300ACDABB /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965D628340CB300ACDABB /* ListViewController.swift */; };
 		E4E965D928340CFB00ACDABB /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965D828340CFB00ACDABB /* AddViewController.swift */; };
 		E4E965DB28340D0900ACDABB /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965DA28340D0900ACDABB /* EditViewController.swift */; };
-		E4E965DD28340D1600ACDABB /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965DC28340D1600ACDABB /* OthersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		E4E965D628340CB300ACDABB /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		E4E965D828340CFB00ACDABB /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		E4E965DA28340D0900ACDABB /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
-		E4E965DC28340D1600ACDABB /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
 		EE9D6B93AC84D4EED95A03E5 /* Pods_IdeaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdeaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -94,7 +92,6 @@
 				E4E965C4283409CB00ACDABB /* SceneDelegate.swift */,
 				E4E965C6283409CB00ACDABB /* ViewController.swift */,
 				E4E965D628340CB300ACDABB /* ListViewController.swift */,
-				E4E965DC28340D1600ACDABB /* OthersViewController.swift */,
 				E4E965DA28340D0900ACDABB /* EditViewController.swift */,
 				E4E965D828340CFB00ACDABB /* AddViewController.swift */,
 				E4E965C8283409CB00ACDABB /* Main.storyboard */,
@@ -223,7 +220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4E965D928340CFB00ACDABB /* AddViewController.swift in Sources */,
-				E4E965DD28340D1600ACDABB /* OthersViewController.swift in Sources */,
 				E4E965C7283409CB00ACDABB /* ViewController.swift in Sources */,
 				E4E965DB28340D0900ACDABB /* EditViewController.swift in Sources */,
 				E4E965C3283409CB00ACDABB /* AppDelegate.swift in Sources */,
