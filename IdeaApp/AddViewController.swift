@@ -76,7 +76,7 @@ class AddViewController:FormViewController{
         <<< AlertRow<String>("") {
             $0.title = "ジャンル"
             $0.selectorTitle = "ジャンルを選択"
-            $0.options = ["アプリ","日用品","生活","エンタメ","その他"]
+            $0.options = ["アプリ","日用品","エンタメ","その他"]
             $0.value = "選択してください"    // 初期選択項目
         }.onChange{[unowned self] row in
             IdeaGenre = row.value ?? "選択なし"
@@ -119,40 +119,57 @@ class AddViewController:FormViewController{
             row.tag = "delete_row"
             row.title = "保存する"
             row.onCellSelection{[unowned self] ButtonCellOf, row in
-                //ボタンを押したときの処理
                 
-                if let title = IdeaTitle,
-                   let detail = IdeaDetail, let Genre = IdeaGenre, let name = Username{
-                    // ②ログイン済みか確認
-                        // ③FirestoreにTodoデータを作成する
-                        let createdTime = FieldValue.serverTimestamp()
-                        Firestore.firestore().collection("\(Genre)のideas").document().setData(
-                            [
-                                "title": title,
-                                "detail": detail,
-                                "createdAt": createdTime,
-                                "updatedAt": Timedate,
-                                "Genre": Genre,
-                                "Name": name,
-                                "UserID": Auth.auth().currentUser?.uid,
-                                "LikeNum": i,
-                                "ReportNum": j
-                            ],merge: true
-                            ,completion: { error in
-                                if let error = error {
-                                    // ③が失敗した場合
-                                    print("アイデア投稿失敗: " + error.localizedDescription)
-                                    let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
-                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(dialog, animated: true, completion: nil)
-                                } else {
-                                    print("TODO作成成功")
-                                    // ④Todo一覧画面に戻る
-                                    self.dismiss(animated: true, completion: nil)
-                                }
-                            })
+                let alert = UIAlertController(title: "投稿", message: "投稿してもよろしいですか？", preferredStyle: .alert)
+                
+                let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
+                    print("Delete button tapped")
+                    //ボタンを押したときの処理
                     
-                }
+                    if let title = IdeaTitle,
+                       let detail = IdeaDetail, let Genre = IdeaGenre, let name = Username{
+                        // ②ログイン済みか確認
+                            // ③FirestoreにTodoデータを作成する
+                            let createdTime = FieldValue.serverTimestamp()
+                            Firestore.firestore().collection("\(Genre)のideas").document().setData(
+                                [
+                                    "title": title,
+                                    "detail": detail,
+                                    "createdAt": createdTime,
+                                    "updatedAt": Timedate,
+                                    "Genre": Genre,
+                                    "Name": name,
+                                    "UserID": Auth.auth().currentUser?.uid,
+                                    "LikeNum": i,
+                                    "ReportNum": j
+                                ],merge: true
+                                ,completion: { error in
+                                    if let error = error {
+                                        // ③が失敗した場合
+                                        print("アイデア投稿失敗: " + error.localizedDescription)
+                                        let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                        dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                        self.present(dialog, animated: true, completion: nil)
+                                    } else {
+                                        print("TODO作成成功")
+                                        // ④Todo一覧画面に戻る
+                                        self.dismiss(animated: true, completion: nil)
+                                    }
+                                })
+                        
+                    }
+
+                })
+                
+                let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                    print("Cancel button tapped")
+                })
+                
+                alert.addAction(delete)
+                alert.addAction(cancel)
+                
+                self.present(alert, animated: true, completion: nil)
+
             }
         }
         

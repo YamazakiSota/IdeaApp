@@ -48,7 +48,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,10 +62,13 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         //OrderSegmentedControl.selectedSegmentIndex = 0
         //sc = 0
-        
+        if let indexPath = tableView.indexPathForSelectedRow{
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
         // ①ログイン済みかどうか確認
         if let user = Auth.auth().currentUser {
@@ -81,50 +83,50 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             })
         }
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var LikeideaArray:[String] = []
-                        var UserlikeideaArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            UserlikeideaArray.append(doc.documentID)
-                            LikeideaArray.append(data["Likeidea"] as! String)
-                        }
-                        self.LikeIdArray = LikeideaArray
-                        self.UserLikeIdArray = UserlikeideaArray
-                    } else if let error = error {
-                        //row.value = false
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var LikeideaArray:[String] = []
+                    var UserlikeideaArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        UserlikeideaArray.append(doc.documentID)
+                        LikeideaArray.append(data["Likeidea"] as! String)
                     }
-                })
-            }
-            
-            
-            
-            if let user = Auth.auth().currentUser {
-                Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
-                    if let querySnapshot = querySnapshot {
-                        var blockuserArray:[String] = []
-                        var blockuseridArray:[String] = []
-                        for doc in querySnapshot.documents {
-                            let data = doc.data()
-                            blockuseridArray.append(doc.documentID)
-                            blockuserArray.append(data["blockuser"] as! String)
-                        }
-                        self.BlockUserArray = blockuserArray
-                        self.BlockUserIdArray = blockuseridArray
-                        
-                    } else if let error = error {
-                        //row.value = false
-                        print("取得失敗: ddd" + error.localizedDescription)
-                        
+                    self.LikeIdArray = LikeideaArray
+                    self.UserLikeIdArray = UserlikeideaArray
+                } else if let error = error {
+                    //row.value = false
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
+        
+        
+        if let user = Auth.auth().currentUser {
+            Firestore.firestore().collection("users").document("\(user.uid)").collection("blockuser").addSnapshotListener({(querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var blockuserArray:[String] = []
+                    var blockuseridArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        blockuseridArray.append(doc.documentID)
+                        blockuserArray.append(data["blockuser"] as! String)
                     }
-                })
-            }
-            
+                    self.BlockUserArray = blockuserArray
+                    self.BlockUserIdArray = blockuseridArray
+                    
+                } else if let error = error {
+                    //row.value = false
+                    print("取得失敗: ddd" + error.localizedDescription)
+                    
+                }
+            })
+        }
+        
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document("\(user.uid)").collection("reportidea").addSnapshotListener({(querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -145,7 +147,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             })
         }
-
+        
         
         if(sc == 0){
             Firestore.firestore().collection("\(Genre)のideas").order(by: "createdAt",descending: true).addSnapshotListener/*.getDocuments*/(/*completion: */{(querySnapshot, error) in
@@ -261,9 +263,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             })
         }
-            
-        }
-
+        
+    }
+    
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -276,25 +278,24 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
-            if(sc == 0){
-                /*let newstr = TimeArray[indexPath.row].filter("0123456789".contains)//202205171630
-                let year = newstr.prefix(4)//20220517
-                let yearno = newstr.dropFirst(4)
-                var month = yearno.prefix(2)
-                let monthno = yearno.dropFirst(2)
-                var day = Int(monthno.prefix(2))
-                let dayno = monthno.dropFirst(2)
-                var hour = Int(dayno.prefix(2))
-                
-                if(hour! > 15){
-                    day = day! + 1
-                }*/
-                
-                cell.detailTextLabel?.text = "作成日：\(TimeArray[indexPath.row])" + NameArray[indexPath.row]
-            }else{
-                cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
-            }
-            
+        if(sc == 0){
+            /*let newstr = TimeArray[indexPath.row].filter("0123456789".contains)//202205171630
+             let year = newstr.prefix(4)//20220517
+             let yearno = newstr.dropFirst(4)
+             var month = yearno.prefix(2)
+             let monthno = yearno.dropFirst(2)
+             var day = Int(monthno.prefix(2))
+             let dayno = monthno.dropFirst(2)
+             var hour = Int(dayno.prefix(2))
+             
+             if(hour! > 15){
+             day = day! + 1
+             }*/
+            cell.detailTextLabel?.text = "作成日：\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
+        }else{
+            cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+        }
+        
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
@@ -304,40 +305,79 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         return 80
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard: UIStoryboard = self.storyboard!
-        let next = storyboard.instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
-        next.IdeaId = IdeaIdArray[indexPath.row]
-        next.IdeaTitle = IdeaTitleArray[indexPath.row]
-        next.IdeaDetail = IdeaDetailArray[indexPath.row]
-        next.IdeaGenre = IdeaGenreArray[indexPath.row]
-        next.NameIDArray = NameIDArray[indexPath.row]
-        next.NameArray = NameArray[indexPath.row]
-        next.LikeNumArray = LikeNumArray[indexPath.row]
-        next.ReportNumArray = ReportNumArray[indexPath.row]
         
-        self.k = 0
-        for i in self.LikeIdArray{
-            if(i == self.IdeaIdArray[indexPath.row]){
-                self.tem = 1
-                next.UserLikeId = UserLikeIdArray[k]
-                next.tem = self.tem
-                break
-            }else {
-                self.tem = 0
-                next.tem = self.tem
-                k += 1
+            /*tableView.deselectRow(at: indexPath, animated: true)
+            let storyboard: UIStoryboard = self.storyboard!
+            let next = storyboard.instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
+            next.IdeaId = IdeaIdArray[indexPath.row]
+            next.IdeaTitle = IdeaTitleArray[indexPath.row]
+            next.IdeaDetail = IdeaDetailArray[indexPath.row]
+            next.IdeaGenre = IdeaGenreArray[indexPath.row]
+            next.NameIDArray = NameIDArray[indexPath.row]
+            next.NameArray = NameArray[indexPath.row]
+            next.LikeNumArray = LikeNumArray[indexPath.row]
+            next.ReportNumArray = ReportNumArray[indexPath.row]
+            
+            self.k = 0
+            for i in self.LikeIdArray{
+                if(i == self.IdeaIdArray[indexPath.row]){
+                    self.tem = 1
+                    next.UserLikeId = UserLikeIdArray[k]
+                    next.tem = self.tem
+                    break
+                }else {
+                    self.tem = 0
+                    next.tem = self.tem
+                    k += 1
+                }
+            }
+            self.present(next, animated: true, completion: nil)*/
+        
+        
+        self.performSegue(withIdentifier: "toEditViewController", sender: nil)
+        }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toEditViewController" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                guard let next = segue.destination as? EditViewController else {
+                    fatalError("Failed to prepare DetailViewController.")
+                }
+                
+                next.IdeaId = IdeaIdArray[indexPath.row]
+                next.IdeaTitle = IdeaTitleArray[indexPath.row]
+                next.IdeaDetail = IdeaDetailArray[indexPath.row]
+                next.IdeaGenre = IdeaGenreArray[indexPath.row]
+                next.NameIDArray = NameIDArray[indexPath.row]
+                next.NameArray = NameArray[indexPath.row]
+                next.LikeNumArray = LikeNumArray[indexPath.row]
+                next.ReportNumArray = ReportNumArray[indexPath.row]
+                
+                self.k = 0
+                for i in self.LikeIdArray{
+                    if(i == self.IdeaIdArray[indexPath.row]){
+                        self.tem = 1
+                        next.UserLikeId = UserLikeIdArray[k]
+                        next.tem = self.tem
+                        break
+                    }else {
+                        self.tem = 0
+                        next.tem = self.tem
+                        k += 1
+                    }
+                }
             }
         }
-        self.present(next, animated: true, completion: nil)
     }
     
     
+
     @IBAction func tapAddButton(_ sender: Any){
         
         // ①Todo作成画面に画面遷移

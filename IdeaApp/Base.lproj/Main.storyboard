@@ -46,7 +46,7 @@
                                         <rect key="frame" x="34" y="13" width="222" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.9979862571" green="0.93347030880000004" blue="0.71144556999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".HiraKakuInterface-W3" family=".Hiragino Kaku Gothic Interface" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -94,7 +94,7 @@
                                         <rect key="frame" x="34" y="13" width="222" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.9979862571" green="0.93347030880000004" blue="0.71144556999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".HiraKakuInterface-W3" family=".Hiragino Kaku Gothic Interface" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="19"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -222,7 +222,6 @@
                                 <segments>
                                     <segment title="アプリ"/>
                                     <segment title="日用品"/>
-                                    <segment title="生活"/>
                                     <segment title="エンタメ"/>
                                     <segment title="その他"/>
                                 </segments>
@@ -231,14 +230,14 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="yXv-sy-Dw1">
-                                <rect key="frame" x="287" y="722" width="45" height="45"/>
+                                <rect key="frame" x="272" y="711" width="73" height="73"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="＋" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
                                         <color key="backgroundColor" red="0.93905311820000004" green="0.67427605390000001" blue="0.1376261711" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="41"/>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="1" bottom="0.0" trailing="0.0"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
@@ -277,11 +276,12 @@
                         <outlet property="ListSegmentedControl" destination="ECm-HE-DS1" id="OEP-LS-kII"/>
                         <outlet property="OrderSegmentedControl" destination="Vdf-oy-4yc" id="OmU-iR-XHR"/>
                         <outlet property="tableView" destination="QTM-iP-yfg" id="14K-4s-2dR"/>
+                        <segue destination="rOn-Iu-54S" kind="show" identifier="toEditViewController" id="vD4-fE-8DM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzs-Fe-vAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2492.753623188406" y="109.82142857142857"/>
+            <point key="canvasLocation" x="2736" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BjD-aD-w5z">
@@ -332,13 +332,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="6X8-9F-zOi">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="CcN-kt-iuk">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="ZQi-Oa-MYY">
+                    <navigationItem key="navigationItem" id="9W1-mW-iT9">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="N0s-BV-fAm">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jyQ-gL-mUq">
                                 <rect key="frame" x="20" y="5" width="92" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="&lt;閉じる"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -347,7 +347,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UkC-Pp-w2N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3512" y="110"/>
+            <point key="canvasLocation" x="3912" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cp3-p7-NU2">
@@ -365,7 +365,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHC-Bi-qfX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1582.608695652174" y="109.82142857142857"/>
+            <point key="canvasLocation" x="1717" y="110"/>
         </scene>
     </scenes>
     <resources>
