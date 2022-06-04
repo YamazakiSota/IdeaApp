@@ -439,20 +439,13 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 getIdeaDataForFirestoreNum()
             }
         case 2:
-            Genre = "生活"
-            if(sc == 0){
-                getIdeaDataForFirestore()
-            }else{
-                getIdeaDataForFirestoreNum()
-            }
-        case 3:
             Genre = "エンタメ"
             if(sc == 0){
                 getIdeaDataForFirestore()
             }else{
                 getIdeaDataForFirestoreNum()
             }
-        case 4:
+        case 3:
             Genre = "その他"
             if(sc == 0){
                 getIdeaDataForFirestore()

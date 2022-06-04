@@ -171,8 +171,9 @@
                                     <action selector="tapLogoutButton:" destination="857-US-h7C" eventType="touchUpInside" id="XQg-zl-C7J"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QTM-iP-yfg">
-                                <rect key="frame" x="0.0" y="200" width="414" height="696"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QTM-iP-yfg">
+                                <rect key="frame" x="0.0" y="178" width="414" height="631"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="Skd-t9-zPj" detailTextLabel="S5p-FE-Kf7" rowHeight="70" style="IBUITableViewCellStyleSubtitle" id="hQs-ze-a12">
@@ -259,15 +260,10 @@
                             <constraint firstItem="ECm-HE-DS1" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="3wT-oE-eWe"/>
                             <constraint firstItem="HCN-Sv-Ksp" firstAttribute="top" secondItem="Vyz-bI-QlL" secondAttribute="top" constant="23" id="8t6-rj-Mx3"/>
                             <constraint firstItem="Vyz-bI-QlL" firstAttribute="trailing" secondItem="HCN-Sv-Ksp" secondAttribute="trailing" constant="30" id="B7S-z2-GpT"/>
-                            <constraint firstItem="QTM-iP-yfg" firstAttribute="leading" secondItem="Vyz-bI-QlL" secondAttribute="leading" id="HGj-ZX-amS"/>
-                            <constraint firstItem="QTM-iP-yfg" firstAttribute="trailing" secondItem="Vyz-bI-QlL" secondAttribute="trailing" id="Oug-R7-0ln"/>
-                            <constraint firstAttribute="bottom" secondItem="QTM-iP-yfg" secondAttribute="bottom" id="cQL-lh-GMd"/>
-                            <constraint firstItem="QTM-iP-yfg" firstAttribute="centerY" secondItem="QvO-Np-18a" secondAttribute="centerY" constant="100" id="chw-Wz-Q8M"/>
                             <constraint firstItem="ECm-HE-DS1" firstAttribute="top" secondItem="4hk-bT-A3e" secondAttribute="bottom" constant="5" id="ewg-pr-Xdy"/>
                             <constraint firstItem="Vdf-oy-4yc" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="eyf-Sw-LId"/>
                             <constraint firstItem="4hk-bT-A3e" firstAttribute="leading" secondItem="Vyz-bI-QlL" secondAttribute="leading" constant="10" id="kNJ-qn-GwM"/>
                             <constraint firstItem="4hk-bT-A3e" firstAttribute="top" secondItem="Vyz-bI-QlL" secondAttribute="top" constant="23" id="mgb-wG-8UW"/>
-                            <constraint firstItem="QTM-iP-yfg" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="nD9-sO-uuZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Bxy-Vq-Q9D"/>
