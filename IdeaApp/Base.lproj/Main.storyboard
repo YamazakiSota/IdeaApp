@@ -161,7 +161,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hk-bT-A3e">
-                                <rect key="frame" x="10" y="111" width="150" height="31"/>
+                                <rect key="frame" x="10" y="67" width="150" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="fLv-Lx-oGy"/>
                                 </constraints>
@@ -202,7 +202,7 @@
                                 </prototypes>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vdf-oy-4yc">
-                                <rect key="frame" x="134.5" y="183" width="145" height="32"/>
+                                <rect key="frame" x="134.5" y="139" width="145" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="145" id="xZH-Dt-aee"/>
                                 </constraints>
@@ -215,7 +215,7 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ECm-HE-DS1">
-                                <rect key="frame" x="25" y="147" width="364" height="32"/>
+                                <rect key="frame" x="25" y="103" width="364" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="364" id="9ch-wo-cr4"/>
                                 </constraints>
@@ -230,8 +230,8 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="yXv-sy-Dw1">
-                                <rect key="frame" x="310" y="726" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="336" y="733" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="＋" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
@@ -246,7 +246,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HCN-Sv-Ksp">
-                                <rect key="frame" x="342" y="111" width="42" height="21"/>
+                                <rect key="frame" x="342" y="67" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -348,24 +348,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UkC-Pp-w2N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3912" y="110"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Cp3-p7-NU2">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S0X-Td-JXS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gBK-VW-NFz">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="857-US-h7C" kind="relationship" relationship="rootViewController" id="3cC-lS-fJ8"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gHC-Bi-qfX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1717" y="110"/>
         </scene>
     </scenes>
     <resources>

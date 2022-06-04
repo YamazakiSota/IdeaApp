@@ -7,7 +7,7 @@
 
 import UIKit
 import Firebase
-
+import GoogleMobileAds
 
 class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -19,6 +19,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var OrderSegmentedControl: UISegmentedControl!
+    
+    var bannerView: GADBannerView!
     
     // Firestoreから取得するTodoのid,title,detail,isDoneを入れる配列を用意
     var IdeaIdArray: [String] = []
@@ -56,6 +58,12 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+        bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        addBannerViewToView(bannerView)
         
         // Do any additional setup after loading the view.
     }
@@ -358,6 +366,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.NameArray = NameArray[indexPath.row]
                 next.LikeNumArray = LikeNumArray[indexPath.row]
                 next.ReportNumArray = ReportNumArray[indexPath.row]
+                next.TimeArray = TimeArray[indexPath.row]
                 
                 self.k = 0
                 for i in self.LikeIdArray{
@@ -685,5 +694,27 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
      // Pass the selected object to the new view controller.
      }
      */
+    
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: view.safeAreaLayoutGuide,
+                                attribute: .bottom,
+                                multiplier: 1,
+                                constant: 0) ,
+            NSLayoutConstraint(item: bannerView,
+                               attribute: .centerX,
+                               relatedBy: .equal,
+                               toItem: view,
+                               attribute: .centerX,
+                               multiplier: 1,
+                               constant: 0)
+            ])
+    }
     
 }
