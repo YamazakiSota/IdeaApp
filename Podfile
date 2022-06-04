@@ -12,4 +12,5 @@ target 'IdeaApp' do
  pod 'Firebase/Auth'
  pod 'Firebase/Firestore'
  pod 'IQKeyboardManagerSwift'
+ pod 'Google-Mobile-Ads-SDK'
 end
