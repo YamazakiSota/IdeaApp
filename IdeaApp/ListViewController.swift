@@ -92,11 +92,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             navigationBar.addSubview(image)
         }
 
-        /*let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 3, height: 5))
-        imageView.contentMode = .scaleAspectFit
-        let image = UIImage(named: "attaraiina")
-        imageView.image = image
-        self.navigationItem.titleView = imageView*/
+        //self.navigationController?.navigationBar.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        
         
 
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)

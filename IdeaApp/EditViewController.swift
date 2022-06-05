@@ -108,6 +108,17 @@ class EditViewController: FormViewController {
             
             form
             // ここからセクション1
+            /*+++ Section() {
+                $0.header = {
+                    let header = HeaderFooterView<UIView>(.callback({let view = UIView(frame: CGRect(x: 0,y: 0,width: self.view.frame.width,height: 30))
+                        view.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+                        return view
+                    }))
+                    return header
+                }()
+            }*/
+            
+            
             +++ Section("内容")
             <<< LabelRow("タイトル") { row in
                 //row.value = "タイトル"
@@ -206,6 +217,7 @@ class EditViewController: FormViewController {
             
             form
             //ここはアイデアセクション
+
             +++ Section("内容")
             <<< LabelRow("タイトル") { row in
                 //row.value = "タイトル"
@@ -446,7 +458,7 @@ class EditViewController: FormViewController {
             (self.form) +++ Section("もうあるよ！！")
             
             <<< TextAreaRow { row in
-                row.placeholder = "詳細を入力\nもうすでにこのアイデアがある場合は\n教えてあげよう！"
+                row.placeholder = "もうすでにこのアイデアがある時や\n制作したよって時に教えてあげよう！"
             }.onChange{ row in
                 self.Comment = row.value ?? "Comment"//変数に格納
             }
