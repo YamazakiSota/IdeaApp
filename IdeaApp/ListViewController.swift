@@ -16,7 +16,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
     @IBOutlet weak var OrderSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var logoutButton: UIButton!
+
+    @IBOutlet weak var LogoutButton: UIButton!
     
     var bannerView: GADBannerView!
     
@@ -74,14 +75,12 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 print(self.name)
                 // ナビゲーションの右上にラベルをセット
-                if let navigationBar = self.navigationController?.navigationBar {
-                    let labelFrame = CGRect(x: self.view.frame.size.width - 85 , y: 0, width: 60.0, height: navigationBar.frame.height)
-                    let label = UILabel(frame: labelFrame)  // ラベルサイズと位置
-                    label.textColor = UIColor.lightGray // テキストカラー
-                    label.text = self.name
-                    label.font = UIFont(name: "Arial", size: 20)
-                    navigationBar.addSubview(label)
-                }
+                // ラベルサイズと位置
+                //LogoutButton.titleLabel.Color = UIColor.lightGray // テキストカラー
+                //self.LogoutButton.frame = CGRect(x: self.view.frame.size.width - 80, y:0, width: 80, height: 30)
+                self.LogoutButton.setTitle(self.name, for: .normal)
+                //LogoutButton.font = UIFont(name: "Arial", size: 20)
+                
                 
             })
 
@@ -428,25 +427,43 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBAction func tapLogoutButton(_ sender: Any) {
-        // ①ログイン済みかどうかを確認
-        if Auth.auth().currentUser != nil {
-            // ②ログアウトの処理
-            do {
-                try Auth.auth().signOut()
-                print("ログアウト完了")
-                // ③成功した場合はログイン画面へ遷移
-                let storyboard: UIStoryboard = self.storyboard!
-                let next = storyboard.instantiateViewController(withIdentifier: "ViewController")
-                self.present(next, animated: true, completion: nil)
-            } catch let error as NSError {
-                print("ログアウト失敗: " + error.localizedDescription)
-                // ②が失敗した場合
-                let dialog = UIAlertController(title: "ログアウト失敗", message: error.localizedDescription, preferredStyle: .alert)
-                dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(dialog, animated: true, completion: nil)
+        
+        let alert = UIAlertController(title: "ログアウト", message: "ログアウトしますか？", preferredStyle: .alert)
+        
+        let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
+            // ①ログイン済みかどうかを確認
+            if Auth.auth().currentUser != nil {
+                // ②ログアウトの処理
+                do {
+                    try Auth.auth().signOut()
+                    print("ログアウト完了")
+                    // ③成功した場合はログイン画面へ遷移
+                    let storyboard: UIStoryboard = self.storyboard!
+                    let next = storyboard.instantiateViewController(withIdentifier: "ViewController")
+                    self.present(next, animated: true, completion: nil)
+                } catch let error as NSError {
+                    print("ログアウト失敗: " + error.localizedDescription)
+                    // ②が失敗した場合
+                    let dialog = UIAlertController(title: "ログアウト失敗", message: error.localizedDescription, preferredStyle: .alert)
+                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(dialog, animated: true, completion: nil)
+                }
             }
-        }
+            
+        })
+        
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
+    
     
     
     
@@ -719,7 +736,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
      }
      */
     
-    
+
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)

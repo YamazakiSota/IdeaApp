@@ -23,7 +23,7 @@ class AddViewController:FormViewController{
     
     var IdeaTitle: String?
     var IdeaDetail: String?
-    var IdeaGenre: String?
+    var IdeaGenre: String = "選択なし"
     var UserID: String?
     var Username: String?
     
@@ -36,7 +36,7 @@ class AddViewController:FormViewController{
         super.viewDidLoad()
         
 
-        tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        //tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
         
         let year = calendar.component(.year, from: date) // 3
         let month = calendar.component(.month, from: date) // 3
@@ -213,6 +213,25 @@ class AddViewController:FormViewController{
         let day = calendar.component(.day, from: date) // 1
         let Timedate = "\(year).\(month).\(day)"
         
+        
+        if(self.IdeaGenre == "選択なし"){
+            let alert = UIAlertController(title: "注意", message: "ジャンルが選択されていません", preferredStyle: .alert)
+            
+            let delete = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Delete button tapped")
+                //ボタンを押したときの処理
+                
+
+
+            })
+            
+            
+            alert.addAction(delete)
+
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }else{
         let alert = UIAlertController(title: "投稿", message: "投稿してもよろしいですか？", preferredStyle: .alert)
         
         let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
@@ -220,17 +239,17 @@ class AddViewController:FormViewController{
             //ボタンを押したときの処理
             
             if let title = self.IdeaTitle,
-               let detail = self.IdeaDetail, let Genre = self.IdeaGenre, let name = self.Username{
+               let detail = self.IdeaDetail,/* let Genre = self.IdeaGenre, */let name = self.Username{
                 // ②ログイン済みか確認
                     // ③FirestoreにTodoデータを作成する
                     let createdTime = FieldValue.serverTimestamp()
-                    Firestore.firestore().collection("\(Genre)のideas").document().setData(
+                Firestore.firestore().collection("\(self.IdeaGenre)のideas").document().setData(
                         [
                             "title": title,
                             "detail": detail,
                             "createdAt": createdTime,
                             "updatedAt": Timedate,
-                            "Genre": Genre,
+                            "Genre": self.IdeaGenre,
                             "Name": name,
                             "UserID": Auth.auth().currentUser?.uid,
                             "LikeNum": self.i,
@@ -265,6 +284,7 @@ class AddViewController:FormViewController{
 
     }
         
+    }
     }
     
     /*

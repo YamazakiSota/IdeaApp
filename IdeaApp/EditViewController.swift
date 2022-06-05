@@ -41,12 +41,41 @@ class EditViewController: FormViewController {
     var tag = 0
     var sect = 0
     var l = 0
+    var name: String = "aa"
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        
+        /*if let user = Auth.auth().currentUser {
+            // ②ログインしているユーザー名の取得
+            Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
+                if let snap = snapshot {
+                    if let data = snap.data() {
+                        self.name = data["name"] as! String
+                    }
+                } else if let error = error {
+                    print("ユーザー名取得失敗: " + error.localizedDescription)
+                }
+                
+                print(self.name)
+                // ナビゲーションの右上にラベルをセット
+                // ラベルサイズと位置
+                
+                if let navigationBar = self.navigationController?.navigationBar {
+                    let labelFrame = CGRect(x: self.view.frame.size.width - 70 , y: 0, width: 55.0, height: navigationBar.frame.height)
+                  let label = UILabel(frame: labelFrame)  // ラベルサイズと位置
+                    label.text = self.name
+                  label.textColor = UIColor.lightGray // テキストカラー
+                  navigationBar.addSubview(label)
+                }
+                
+            })
+
+        }*/
+
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document("\(user.uid)").collection("reportidea").addSnapshotListener({(querySnapshot, error) in
@@ -142,10 +171,12 @@ class EditViewController: FormViewController {
             <<< LabelRow("LabelRow"){ row in
                 row.title = "ジャンル"
                 row.value = "\(IdeaGenre!)"
-            }.cellUpdate{ cell, row in
-                cell.detailTextLabel?.textColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
-                cell.textLabel?.textColor = .black
             }
+            
+            /*.cellUpdate{ cell, row in
+                //cell.detailTextLabel?.textColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+                cell.textLabel?.textColor = .black
+            }*/
             
             <<< LabelRow("名前"){ row in
                 row.title =   "名前"
@@ -699,10 +730,12 @@ class EditViewController: FormViewController {
                                         self.present(dialog, animated: true, completion: nil)
                                     } else {
                                         print("TODO削除成功")
-                                        self.navigationController?.popViewController(animated: true)
+                                        
                                     }
                                 }
                             }
+                            
+                            self.navigationController?.popViewController(animated: true)
                             
                         })
                         
@@ -750,6 +783,7 @@ class EditViewController: FormViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
     
     @IBAction func BackButton(){
         self.navigationController?.popViewController(animated: true)
