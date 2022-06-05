@@ -9,12 +9,11 @@ import UIKit
 import Firebase
 import GoogleMobileAds
 
-class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var Label1: UILabel!
     
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
     
@@ -41,6 +40,11 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var CommentNameArray: [String] = []
     var TimeArray: [String] = []
     
+    var currentTitles:[String] = []
+    var currentTime:[String] = []
+    var currentLikeNum:[Int] = []
+    var currentName:[String] = []
+    
     var tem: Int = 0
     var k: Int = 0
     var s: Int = 0
@@ -57,7 +61,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         
         if let user = Auth.auth().currentUser {
             // ②ログインしているユーザー名の取得
@@ -114,21 +117,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if let indexPath = tableView.indexPathForSelectedRow{
             tableView.deselectRow(at: indexPath, animated: true)
         }
-        
-        // ①ログイン済みかどうか確認
-       /* if let user = Auth.auth().currentUser {
-            // ②ログインしているユーザー名の取得
-            Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
-                if let snap = snapshot {
-                    if let data = snap.data() {
-                        self.Label1.text = data["name"] as? String
-                        self.name = data["name"] as! String
-                    }
-                } else if let error = error {
-                    print("ユーザー名取得失敗: " + error.localizedDescription)
-                }
-            })
-        }*/
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in
@@ -313,7 +301,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return IdeaTitleArray.count
     }
@@ -321,9 +308,13 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+
+
+
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
+        
         if(sc == 0){
             /*let newstr = TimeArray[indexPath.row].filter("0123456789".contains)//202205171630
              let year = newstr.prefix(4)//20220517
@@ -345,7 +336,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
-        
+
         
         return cell
     }

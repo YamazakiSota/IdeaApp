@@ -154,7 +154,7 @@ class EditViewController: FormViewController {
             
             
             
-            (self.form) +++ Section("管理")
+            (self.form) +++ Section("　")
             
             <<< ButtonRow() {
                 $0.title = "削除"
@@ -176,7 +176,7 @@ class EditViewController: FormViewController {
                             self.present(dialog, animated: true, completion: nil)
                         } else {
                             print("TODO削除成功")
-                            self.dismiss(animated: true, completion: nil)
+                            self.navigationController?.popViewController(animated: true)
                         }
                     }
 
@@ -258,10 +258,10 @@ class EditViewController: FormViewController {
             
             
             //いいねセクション
-            +++ Section("いいね")
+            +++ Section("欲しい")
             
             <<< SwitchRow(){ row in
-                row.title = "欲しい"
+                row.title = "あったらいいな"
                 
                 
                 if(self.tem == 0){
@@ -455,7 +455,7 @@ class EditViewController: FormViewController {
             
             
             
-            (self.form) +++ Section("もうあるよ！！")
+            (self.form) +++ Section("コメント")
             
             <<< TextAreaRow { row in
                 row.placeholder = "もうすでにこのアイデアがある時や\n制作したよって時に教えてあげよう！"
@@ -475,7 +475,7 @@ class EditViewController: FormViewController {
                 let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
                     print("Delete button tapped")
                     //ボタンを押したときの処理
-                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                     
                     if let comment = self.Comment{
                         // ②ログイン済みか確認
@@ -493,7 +493,7 @@ class EditViewController: FormViewController {
                                     } else {
                                         print("コメント作成成功")
                                         // ④Todo一覧画面に戻る
-                                        self.dismiss(animated: true, completion: nil)
+                                        self.navigationController?.popViewController(animated: true)
                                     }
                                 })
                         }
@@ -512,6 +512,8 @@ class EditViewController: FormViewController {
 
             }
 
+            
+            
             Firestore.firestore().collection("\(IdeaGenre!)のideas/\(IdeaId!)/Comment").addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     var commentArray:[String] = []
@@ -543,127 +545,38 @@ class EditViewController: FormViewController {
                     }
                     self.k = 0
                     
-                    self.tableView.reloadData()
-                } else if let error = error {
-                    print("取得失敗: ccc" + error.localizedDescription)
-                }
-            })
-                
-                
-                (self.form) +++ Section("操作")
-                
-                <<< ButtonRow() {
-                    $0.title = "ブロック"
-                }.cellSetup() {cell, row in
                     
-                    cell.tintColor = UIColor.red
-                }.onCellSelection {[unowned self] ButtonCellOf, row in
+                    (self.form) +++ Section("　")
                     
-                    let alert = UIAlertController(title: "ブロック", message: "このユーザーをブロックしますか？", preferredStyle: .alert)
-                    
-                    let delete = UIAlertAction(title: "ブロックする", style: .destructive, handler: { (action) -> Void in
-                        print("Delete button tapped")
-                        //ボタンを押したときの処理
-                        if let user = Auth.auth().currentUser {
-                            Firestore.firestore().collection("users/\(user.uid)/blockuser").document().setData(
-                                [   "blockuser": self.NameIDArray!,
-                                ],merge: true
-                                ,completion: { error in
-                                    if let error = error {
-                                        // ③が失敗した場合
-                                        print("アイデア投稿失敗: " + error.localizedDescription)
-                                        
-                                    } else {
-                                        print("idea作成成功")
-                                        self.dismiss(animated: true, completion: nil)
-                                        // ④Todo一覧画面に戻る
-                                    }
-                                })
-                        }
-
-                    })
-                    
-                    let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
-                        print("Cancel button tapped")
-                    })
-                    
-                    alert.addAction(delete)
-                    alert.addAction(cancel)
-                    
-                    self.present(alert, animated: true, completion: nil)
-
-                    
-                }
-                
-                <<< ButtonRow() {
-                    $0.title = "報告"
-                }.cellSetup() {cell, row in
-                    cell.tintColor = UIColor.red
-                }.onCellSelection{[unowned self] ButtonCellOf, row in
+                    <<< ButtonRow() {
+                        $0.title = "ブロック"
+                    }.cellSetup() {cell, row in
                         
-                        let alert = UIAlertController(title: "報告", message: "この投稿を報告しますか？", preferredStyle: .alert)
+                        cell.tintColor = UIColor.red
+                    }.onCellSelection {[unowned self] ButtonCellOf, row in
                         
-                        let delete = UIAlertAction(title: "報告する", style: .destructive, handler: { (action) -> Void in
+                        let alert = UIAlertController(title: "ブロック", message: "このユーザーをブロックしますか？", preferredStyle: .alert)
+                        
+                        let delete = UIAlertAction(title: "ブロックする", style: .destructive, handler: { (action) -> Void in
                             print("Delete button tapped")
                             //ボタンを押したときの処理
-                            
-                            self.l = 0
-                            
-                            for i in self.ReportIdeaArray{
-                                if(i == self.IdeaId!){
-                                    self.l = 1
-                                }
-                            }
-                            
-                            if(self.l == 0){
-                                
-                                
-                                self.ReportNumArray! += 1
-                                
-                                Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId!).setData(
-                                    [   "ReportNum": self.ReportNumArray!,
+                            if let user = Auth.auth().currentUser {
+                                Firestore.firestore().collection("users/\(user.uid)/blockuser").document().setData(
+                                    [   "blockuser": self.NameIDArray!,
                                     ],merge: true
                                     ,completion: { error in
                                         if let error = error {
                                             // ③が失敗した場合
                                             print("アイデア投稿失敗: " + error.localizedDescription)
+                                            
                                         } else {
-                                            print("TODO作成成功")
+                                            print("idea作成成功")
+                                            self.navigationController?.popViewController(animated: true)
                                             // ④Todo一覧画面に戻る
                                         }
                                     })
-                                
-                                if let user = Auth.auth().currentUser {
-                                    Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
-                                        [   "ReportIdea": self.IdeaId!,
-                                        ],merge: true
-                                        ,completion: { error in
-                                            if let error = error {
-                                                // ③が失敗した場合
-                                                print("アイデア投稿失敗: " + error.localizedDescription)
-                                            } else {
-                                                print("idea作成成功")
-                                                // ④Todo一覧画面に戻る
-                                            }
-                                        })
-                                }
-                                
                             }
-                            
-                            if(self.ReportNumArray >= 10){
-                            Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
-                                if let error = error {
-                                    print("TODO削除失敗: " + error.localizedDescription)
-                                    let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
-                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(dialog, animated: true, completion: nil)
-                                } else {
-                                    print("TODO削除成功")
-                                    self.dismiss(animated: true, completion: nil)
-                                }
-                            }
-                            }
-                            
+
                         })
                         
                         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
@@ -676,7 +589,100 @@ class EditViewController: FormViewController {
                         self.present(alert, animated: true, completion: nil)
 
                         
+                    }
+                    
+                    <<< ButtonRow() {
+                        $0.title = "報告"
+                    }.cellSetup() {cell, row in
+                        cell.tintColor = UIColor.red
+                    }.onCellSelection{[unowned self] ButtonCellOf, row in
+                            
+                            let alert = UIAlertController(title: "報告", message: "この投稿を報告しますか？", preferredStyle: .alert)
+                            
+                            let delete = UIAlertAction(title: "報告する", style: .destructive, handler: { (action) -> Void in
+                                print("Delete button tapped")
+                                //ボタンを押したときの処理
+                                
+                                self.l = 0
+                                
+                                for i in self.ReportIdeaArray{
+                                    if(i == self.IdeaId!){
+                                        self.l = 1
+                                    }
+                                }
+                                
+                                if(self.l == 0){
+                                    
+                                    
+                                    self.ReportNumArray! += 1
+                                    
+                                    Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId!).setData(
+                                        [   "ReportNum": self.ReportNumArray!,
+                                        ],merge: true
+                                        ,completion: { error in
+                                            if let error = error {
+                                                // ③が失敗した場合
+                                                print("アイデア投稿失敗: " + error.localizedDescription)
+                                            } else {
+                                                print("TODO作成成功")
+                                                // ④Todo一覧画面に戻る
+                                            }
+                                        })
+                                    
+                                    if let user = Auth.auth().currentUser {
+                                        Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
+                                            [   "ReportIdea": self.IdeaId!,
+                                            ],merge: true
+                                            ,completion: { error in
+                                                if let error = error {
+                                                    // ③が失敗した場合
+                                                    print("アイデア投稿失敗: " + error.localizedDescription)
+                                                } else {
+                                                    print("idea作成成功")
+                                                    // ④Todo一覧画面に戻る
+                                                }
+                                            })
+                                    }
+                                    
+                                }
+                                
+                                if(self.ReportNumArray >= 10){
+                                Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
+                                    if let error = error {
+                                        print("TODO削除失敗: " + error.localizedDescription)
+                                        let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                        dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                        self.present(dialog, animated: true, completion: nil)
+                                    } else {
+                                        print("TODO削除成功")
+                                        self.navigationController?.popViewController(animated: true)
+                                    }
+                                }
+                                }
+                                
+                            })
+                            
+                            let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                                print("Cancel button tapped")
+                            })
+                            
+                            alert.addAction(delete)
+                            alert.addAction(cancel)
+                            
+                            self.present(alert, animated: true, completion: nil)
+
+                            
+                    }
+                    self.tableView.reloadData()
+                } else if let error = error {
+                    print("取得失敗: ccc" + error.localizedDescription)
                 }
+            })
+                
+                
+            
+            
+                
                 
             /*(self.form) +++ Section("戻る")
                 <<< ButtonRow() {

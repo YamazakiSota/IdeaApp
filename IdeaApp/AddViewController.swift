@@ -153,11 +153,11 @@ class AddViewController:FormViewController{
          $0.value = Date()
          }*/
         
-        +++ Section("操作")
+        +++ Section("　")
         
         <<< ButtonRow("Button2") {row in
             row.tag = "delete_row"
-            row.title = "保存する"
+            row.title = "投稿する"
             row.onCellSelection{[unowned self] ButtonCellOf, row in
                 
                 let alert = UIAlertController(title: "投稿", message: "投稿してもよろしいですか？", preferredStyle: .alert)
@@ -193,7 +193,7 @@ class AddViewController:FormViewController{
                                     } else {
                                         print("TODO作成成功")
                                         // ④Todo一覧画面に戻る
-                                        self.dismiss(animated: true, completion: nil)
+                                        self.navigationController?.popViewController(animated: true)
                                     }
                                 })
                         
