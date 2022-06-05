@@ -48,7 +48,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var Genre: String = "アプリ"
     
-    
+    var name: String = "aa"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +59,46 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.dataSource = self
         
         
+        if let user = Auth.auth().currentUser {
+            // ②ログインしているユーザー名の取得
+            Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
+                if let snap = snapshot {
+                    if let data = snap.data() {
+                        self.name = data["name"] as! String
+                    }
+                } else if let error = error {
+                    print("ユーザー名取得失敗: " + error.localizedDescription)
+                }
+                
+                print(self.name)
+                // ナビゲーションの右上にラベルをセット
+                if let navigationBar = self.navigationController?.navigationBar {
+                    let labelFrame = CGRect(x: self.view.frame.size.width - 85 , y: 0, width: 55.0, height: navigationBar.frame.height)
+                    let label = UILabel(frame: labelFrame)  // ラベルサイズと位置
+                    label.textColor = UIColor.black // テキストカラー
+                    label.text = self.name
+                    navigationBar.addSubview(label)
+                }
+                
+            })
+
+        }
+        
+        // ナビゲーションの右上にラベルをセット
+        if let navigationBar = self.navigationController?.navigationBar {
+            let imageFrame = CGRect(x: (self.view.frame.size.width / 2) - 40, y: 3, width: 80, height: 33)
+            let image = UIImageView(frame: imageFrame)  // ラベルサイズと位置
+            image.image = UIImage(named: "attaraiina")
+            navigationBar.addSubview(image)
+        }
+
+        /*let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 3, height: 5))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "attaraiina")
+        imageView.image = image
+        self.navigationItem.titleView = imageView*/
+        
+
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
@@ -79,18 +119,19 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         // ①ログイン済みかどうか確認
-        if let user = Auth.auth().currentUser {
+       /* if let user = Auth.auth().currentUser {
             // ②ログインしているユーザー名の取得
             Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
                 if let snap = snapshot {
                     if let data = snap.data() {
                         self.Label1.text = data["name"] as? String
+                        self.name = data["name"] as! String
                     }
                 } else if let error = error {
                     print("ユーザー名取得失敗: " + error.localizedDescription)
                 }
             })
-        }
+        }*/
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document("\(user.uid)").collection("likeidea").addSnapshotListener({(querySnapshot, error) in

@@ -43,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = vc*/
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let rootViewController = storyboard.instantiateViewController(withIdentifier: "ListViewController")
+            let rootViewController = storyboard.instantiateViewController(withIdentifier: "Navi0ViewController"/*"ListViewController"*/)
             self.window?.rootViewController = rootViewController
             self.window?.makeKeyAndVisible()
 

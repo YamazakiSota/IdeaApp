@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var RegisterNameTextField: UITextField!
     
     
+    var window: UIWindow?
     var Idea: String = "XXX"
     var BlockUser: String = "YYY"
     var ReportIdea: String = "ZZZ"
@@ -55,7 +56,8 @@ class ViewController: UIViewController {
                             print("ユーザー作成完了 name:" + name)
                             // ③成功した場合はTodo一覧画面に画面遷移を行う
                             let storyboard: UIStoryboard = self.storyboard!
-                            let next = storyboard.instantiateViewController(withIdentifier: "ListViewController")
+                            let next = storyboard.instantiateViewController(withIdentifier: "Navi0ViewController")
+                            next.modalPresentationStyle = .fullScreen
                             self.present(next, animated: true, completion: nil)
                         }
                     })
@@ -128,8 +130,10 @@ class ViewController: UIViewController {
                             print("ログイン完了 uid:" + user.uid)
                             // ②成功した場合はTodo一覧画面に画面遷移を行う
                             let storyboard: UIStoryboard = self.storyboard!
-                            let next = storyboard.instantiateViewController(withIdentifier: "ListViewController")
+                            let next = storyboard.instantiateViewController(withIdentifier: "Navi0ViewController")
+                            next.modalPresentationStyle = .fullScreen
                             self.present(next, animated: true, completion: nil)
+                            
                         } else if let error = error {
                             // ①が失敗した場合
                             print("ログイン失敗 " + error.localizedDescription)

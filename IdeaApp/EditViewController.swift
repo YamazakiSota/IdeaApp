@@ -185,7 +185,7 @@ class EditViewController: FormViewController {
                 
             
             
-            //(self.form)
+            /*
             (self.form) +++ Section("戻る")
             <<< ButtonRow() {
                 $0.title = "戻る"
@@ -195,7 +195,7 @@ class EditViewController: FormViewController {
             }.onCellSelection {[unowned self] ButtonCellOf, row in
                 self.dismiss(animated: true, completion: nil)
             }
-            
+            */
             
             
         }else {
@@ -666,16 +666,14 @@ class EditViewController: FormViewController {
                         
                 }
                 
-            (self.form) +++ Section("戻る")
+            /*(self.form) +++ Section("戻る")
                 <<< ButtonRow() {
                     $0.title = "戻る"
                 }.cellSetup() {cell, row in
-                    
                     cell.tintColor = UIColor.blue
                 }.onCellSelection {[unowned self] ButtonCellOf, row in
-                    
                     self.dismiss(animated: true, completion: nil)
-                }
+                }*/
                 
 
         }
@@ -692,5 +690,10 @@ class EditViewController: FormViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
+    @IBAction func BackButton(){
+        self.navigationController?.popViewController(animated: true)
+        
+    }
     
 }
