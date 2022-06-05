@@ -14,10 +14,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var OrderSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var logoutButton: UIButton!
     
     var bannerView: GADBannerView!
     
@@ -57,10 +56,10 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
+
         tableView.delegate = self
         tableView.dataSource = self
+        
         
         if let user = Auth.auth().currentUser {
             // ②ログインしているユーザー名の取得
@@ -76,10 +75,11 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print(self.name)
                 // ナビゲーションの右上にラベルをセット
                 if let navigationBar = self.navigationController?.navigationBar {
-                    let labelFrame = CGRect(x: self.view.frame.size.width - 85 , y: 0, width: 55.0, height: navigationBar.frame.height)
+                    let labelFrame = CGRect(x: self.view.frame.size.width - 85 , y: 0, width: 60.0, height: navigationBar.frame.height)
                     let label = UILabel(frame: labelFrame)  // ラベルサイズと位置
-                    label.textColor = UIColor.black // テキストカラー
+                    label.textColor = UIColor.lightGray // テキストカラー
                     label.text = self.name
+                    label.font = UIFont(name: "Arial", size: 20)
                     navigationBar.addSubview(label)
                 }
                 
@@ -87,7 +87,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         }
         
-        // ナビゲーションの右上にラベルをセット
+        // ナビゲーションの真ん中にラベルをセット
         if let navigationBar = self.navigationController?.navigationBar {
             let imageFrame = CGRect(x: (self.view.frame.size.width / 2) - 40, y: 3, width: 80, height: 33)
             let image = UIImageView(frame: imageFrame)  // ラベルサイズと位置
@@ -328,7 +328,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
              if(hour! > 15){
              day = day! + 1
              }*/
-            cell.detailTextLabel?.text = "作成日：\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
+            cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
         }else{
             cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
         }
@@ -336,6 +336,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
+        cell.detailTextLabel?.textColor = UIColor.lightGray
 
         
         return cell
@@ -607,6 +608,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
     }
+    
     
     func getIdeaDataForFirestoreNum() {
         

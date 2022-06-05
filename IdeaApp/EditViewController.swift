@@ -46,6 +46,7 @@ class EditViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
         
         if let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users").document("\(user.uid)").collection("reportidea").addSnapshotListener({(querySnapshot, error) in
@@ -107,16 +108,17 @@ class EditViewController: FormViewController {
             //自分の投稿の場合
             
             form
+            
             // ここからセクション1
             /*+++ Section() {
-                $0.header = {
-                    let header = HeaderFooterView<UIView>(.callback({let view = UIView(frame: CGRect(x: 0,y: 0,width: self.view.frame.width,height: 30))
-                        view.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
-                        return view
-                    }))
-                    return header
-                }()
-            }*/
+             $0.header = {
+             let header = HeaderFooterView<UIView>(.callback({let view = UIView(frame: CGRect(x: 0,y: 0,width: self.view.frame.width,height: 30))
+             view.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+             return view
+             }))
+             return header
+             }()
+             }*/
             
             
             +++ Section("内容")
@@ -140,6 +142,9 @@ class EditViewController: FormViewController {
             <<< LabelRow("LabelRow"){ row in
                 row.title = "ジャンル"
                 row.value = "\(IdeaGenre!)"
+            }.cellUpdate{ cell, row in
+                cell.detailTextLabel?.textColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+                cell.textLabel?.textColor = .black
             }
             
             <<< LabelRow("名前"){ row in
@@ -152,72 +157,110 @@ class EditViewController: FormViewController {
                 row.value =   "\(TimeArray)"
             }
             
+            <<< LabelRow("欲しい"){ row in
+                row.title =   "あったらいいな"
+                row.value =   "\(LikeNumArray!)"
+            }
             
             
-            (self.form) +++ Section("　")
             
-            <<< ButtonRow() {
-                $0.title = "削除"
-            }.cellSetup() {cell, row in
-                
-                cell.tintColor = UIColor.red
-            }.onCellSelection {[unowned self] ButtonCellOf, row in
-                
-                let alert = UIAlertController(title: "削除", message: "この投稿を削除しますか？", preferredStyle: .alert)
-                
-                let delete = UIAlertAction(title: "削除する", style: .destructive, handler: { (action) -> Void in
-                    print("Delete button tapped")
-                    //ボタンを押したときの処理
-                    Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
-                        if let error = error {
-                            print("TODO削除失敗: " + error.localizedDescription)
-                            let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
-                            dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(dialog, animated: true, completion: nil)
-                        } else {
-                            print("TODO削除成功")
-                            self.navigationController?.popViewController(animated: true)
+            Firestore.firestore().collection("\(IdeaGenre!)のideas/\(IdeaId!)/Comment").addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    var commentArray:[String] = []
+                    var commentnameArray:[String] = []
+                    for doc in querySnapshot.documents {
+                        let data = doc.data()
+                        commentArray.append(data["Comment"] as! String)
+                        commentnameArray.append(data["Name"] as! String)
+                        self.tableView.reloadData()
+                        self.sect = 1
+                    }
+                    
+                    if(self.sect == 1){
+                        (self.form) +++ Section("みんなからのコメント")
+                    }
+                    self.sect = 0
+                    print(commentArray)
+                    for option in commentArray {
+                        self.form.last! <<< TextAreaRow(option){ listRow in
+                            listRow.placeholder = option + "\n投稿者：\(commentnameArray[self.k])"
+                            listRow.disabled = true
+                            listRow.tag = "\(self.tag)"
+                            self.k += 1
+                            self.tag += 1
+                        }.cellSetup{ cell, row in
+                            cell.placeholderLabel?.textColor = .darkGray
+                            cell.placeholderLabel?.tintColor = .darkGray
                         }
                     }
-
-                })
-                
-                let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
-                    print("Cancel button tapped")
-                })
-                
-                alert.addAction(delete)
-                alert.addAction(cancel)
-                
-                self.present(alert, animated: true, completion: nil)
-
-                
+                    self.k = 0
+                    
+                    (self.form) +++ Section("　")
+                    
+                    <<< ButtonRow() {
+                        $0.title = "削除"
+                    }.cellSetup() {cell, row in
+                        
+                        cell.tintColor = UIColor.red
+                    }.onCellSelection {[unowned self] ButtonCellOf, row in
+                        
+                        let alert = UIAlertController(title: "削除", message: "この投稿を削除しますか？", preferredStyle: .alert)
+                        
+                        let delete = UIAlertAction(title: "削除する", style: .destructive, handler: { (action) -> Void in
+                            print("Delete button tapped")
+                            //ボタンを押したときの処理
+                            Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
+                                if let error = error {
+                                    print("TODO削除失敗: " + error.localizedDescription)
+                                    let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(dialog, animated: true, completion: nil)
+                                } else {
+                                    print("TODO削除成功")
+                                    self.navigationController?.popViewController(animated: true)
+                                }
+                            }
+                            
+                        })
+                        
+                        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                            print("Cancel button tapped")
+                        })
+                        
+                        alert.addAction(delete)
+                        alert.addAction(cancel)
+                        
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                self.tableView.reloadData()
+            } else if let error = error {
+                print("取得失敗: ccc" + error.localizedDescription)
             }
-                
-            
+        })
+          
             
             /*
-            (self.form) +++ Section("戻る")
-            <<< ButtonRow() {
-                $0.title = "戻る"
-            }.cellSetup() {cell, row in
-                
-                cell.tintColor = UIColor.blue
-            }.onCellSelection {[unowned self] ButtonCellOf, row in
-                self.dismiss(animated: true, completion: nil)
-            }
-            */
+             (self.form) +++ Section("戻る")
+             <<< ButtonRow() {
+             $0.title = "戻る"
+             }.cellSetup() {cell, row in
+             
+             cell.tintColor = UIColor.blue
+             }.onCellSelection {[unowned self] ButtonCellOf, row in
+             self.dismiss(animated: true, completion: nil)
+             }
+             */
             
             
         }else {
             //他の人の投稿
             
-           
+            
             
             
             form
             //ここはアイデアセクション
-
+            
             +++ Section("内容")
             <<< LabelRow("タイトル") { row in
                 //row.value = "タイトル"
@@ -254,7 +297,11 @@ class EditViewController: FormViewController {
                 row.title =   "日付"
                 row.value =   "\(TimeArray)"
             }
-            
+            <<< LabelRow("欲しい"){ row in
+                row.title =   "欲しい数"
+                row.value =   "\(LikeNumArray!)"
+            }
+
             
             
             //いいねセクション
@@ -305,11 +352,7 @@ class EditViewController: FormViewController {
                                 // ④Todo一覧画面に戻る
                             }
                         })
-                    
-                    
-                    
-                    
-                    
+                    self.tableView.reloadData()
                 }else{
                     self.LikeNumArray! -= 1
                     
@@ -337,11 +380,12 @@ class EditViewController: FormViewController {
                             }
                         }
                     }
+                    self.tableView.reloadData()
                 }
             }
             
             
-            
+
             
             /*ここから練習1
              if(self.tem == 0){
@@ -498,7 +542,7 @@ class EditViewController: FormViewController {
                                 })
                         }
                     }
-
+                    
                 })
                 
                 let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
@@ -509,9 +553,9 @@ class EditViewController: FormViewController {
                 alert.addAction(cancel)
                 
                 self.present(alert, animated: true, completion: nil)
-
+                
             }
-
+            
             
             
             Firestore.firestore().collection("\(IdeaGenre!)のideas/\(IdeaId!)/Comment").addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
@@ -576,7 +620,7 @@ class EditViewController: FormViewController {
                                         }
                                     })
                             }
-
+                            
                         })
                         
                         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
@@ -587,7 +631,7 @@ class EditViewController: FormViewController {
                         alert.addAction(cancel)
                         
                         self.present(alert, animated: true, completion: nil)
-
+                        
                         
                     }
                     
@@ -596,57 +640,57 @@ class EditViewController: FormViewController {
                     }.cellSetup() {cell, row in
                         cell.tintColor = UIColor.red
                     }.onCellSelection{[unowned self] ButtonCellOf, row in
+                        
+                        let alert = UIAlertController(title: "報告", message: "この投稿を報告しますか？", preferredStyle: .alert)
+                        
+                        let delete = UIAlertAction(title: "報告する", style: .destructive, handler: { (action) -> Void in
+                            print("Delete button tapped")
+                            //ボタンを押したときの処理
                             
-                            let alert = UIAlertController(title: "報告", message: "この投稿を報告しますか？", preferredStyle: .alert)
+                            self.l = 0
                             
-                            let delete = UIAlertAction(title: "報告する", style: .destructive, handler: { (action) -> Void in
-                                print("Delete button tapped")
-                                //ボタンを押したときの処理
-                                
-                                self.l = 0
-                                
-                                for i in self.ReportIdeaArray{
-                                    if(i == self.IdeaId!){
-                                        self.l = 1
-                                    }
+                            for i in self.ReportIdeaArray{
+                                if(i == self.IdeaId!){
+                                    self.l = 1
                                 }
+                            }
+                            
+                            if(self.l == 0){
                                 
-                                if(self.l == 0){
-                                    
-                                    
-                                    self.ReportNumArray! += 1
-                                    
-                                    Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId!).setData(
-                                        [   "ReportNum": self.ReportNumArray!,
+                                
+                                self.ReportNumArray! += 1
+                                
+                                Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId!).setData(
+                                    [   "ReportNum": self.ReportNumArray!,
+                                    ],merge: true
+                                    ,completion: { error in
+                                        if let error = error {
+                                            // ③が失敗した場合
+                                            print("アイデア投稿失敗: " + error.localizedDescription)
+                                        } else {
+                                            print("TODO作成成功")
+                                            // ④Todo一覧画面に戻る
+                                        }
+                                    })
+                                
+                                if let user = Auth.auth().currentUser {
+                                    Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
+                                        [   "ReportIdea": self.IdeaId!,
                                         ],merge: true
                                         ,completion: { error in
                                             if let error = error {
                                                 // ③が失敗した場合
                                                 print("アイデア投稿失敗: " + error.localizedDescription)
                                             } else {
-                                                print("TODO作成成功")
+                                                print("idea作成成功")
                                                 // ④Todo一覧画面に戻る
                                             }
                                         })
-                                    
-                                    if let user = Auth.auth().currentUser {
-                                        Firestore.firestore().collection("users/\(user.uid)/reportidea").document().setData(
-                                            [   "ReportIdea": self.IdeaId!,
-                                            ],merge: true
-                                            ,completion: { error in
-                                                if let error = error {
-                                                    // ③が失敗した場合
-                                                    print("アイデア投稿失敗: " + error.localizedDescription)
-                                                } else {
-                                                    print("idea作成成功")
-                                                    // ④Todo一覧画面に戻る
-                                                }
-                                            })
-                                    }
-                                    
                                 }
                                 
-                                if(self.ReportNumArray >= 10){
+                            }
+                            
+                            if(self.ReportNumArray >= 10){
                                 Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
                                     if let error = error {
                                         print("TODO削除失敗: " + error.localizedDescription)
@@ -658,47 +702,45 @@ class EditViewController: FormViewController {
                                         self.navigationController?.popViewController(animated: true)
                                     }
                                 }
-                                }
-                                
-                            })
+                            }
                             
-                            let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
-                                print("Cancel button tapped")
-                            })
-                            
-                            alert.addAction(delete)
-                            alert.addAction(cancel)
-                            
-                            self.present(alert, animated: true, completion: nil)
-
-                            
+                        })
+                        
+                        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                            print("Cancel button tapped")
+                        })
+                        
+                        alert.addAction(delete)
+                        alert.addAction(cancel)
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
                     }
                     self.tableView.reloadData()
                 } else if let error = error {
                     print("取得失敗: ccc" + error.localizedDescription)
                 }
             })
-                
-                
             
             
-                
-                
+            
+            
+            
+            
             /*(self.form) +++ Section("戻る")
-                <<< ButtonRow() {
-                    $0.title = "戻る"
-                }.cellSetup() {cell, row in
-                    cell.tintColor = UIColor.blue
-                }.onCellSelection {[unowned self] ButtonCellOf, row in
-                    self.dismiss(animated: true, completion: nil)
-                }*/
-                
-
+             <<< ButtonRow() {
+             $0.title = "戻る"
+             }.cellSetup() {cell, row in
+             cell.tintColor = UIColor.blue
+             }.onCellSelection {[unowned self] ButtonCellOf, row in
+             self.dismiss(animated: true, completion: nil)
+             }*/
+            
+            
         }
+    
     }
-    
-    
-    
     /*
      // MARK: - Navigation
      
@@ -715,3 +757,5 @@ class EditViewController: FormViewController {
     }
     
 }
+
+

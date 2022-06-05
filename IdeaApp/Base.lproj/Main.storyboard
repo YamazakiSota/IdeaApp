@@ -65,7 +65,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99607843137254903" green="0.93333333333333335" blue="0.70980392156862748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="OfF-eo-TAc"/>
                                     <constraint firstAttribute="height" constant="203" id="tQ6-ZH-02n"/>
@@ -247,19 +247,28 @@
                             <constraint firstItem="ECm-HE-DS1" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="p7a-LE-fD9"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="Bxy-Vq-Q9D">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="MZa-91-8d8">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="4hk-bT-A3e">
-                                <rect key="frame" x="20" y="5" width="150" height="34.5"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="q1v-jD-iGj">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="gUp-Oh-QDZ">
+                                <rect key="frame" x="20" y="4.5" width="90" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="ログアウト"/>
+                                <buttonConfiguration key="configuration" style="plain" title="ログアウト" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.99415355920000004" green="0.82501217986143704" blue="0.37671015137035507" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
                                 <connections>
-                                    <action selector="tapLogoutButton:" destination="857-US-h7C" eventType="touchUpInside" id="XQg-zl-C7J"/>
+                                    <action selector="tapLogoutButton:" destination="857-US-h7C" eventType="touchUpInside" id="Zlo-sn-7fa"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ListSegmentedControl" destination="ECm-HE-DS1" id="OEP-LS-kII"/>
                         <outlet property="OrderSegmentedControl" destination="Vdf-oy-4yc" id="OmU-iR-XHR"/>
@@ -295,13 +304,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="uxB-c0-mxk"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Soi-9W-BBL">
-                        <barButtonItem key="leftBarButtonItem" title="&lt;閉じる" style="plain" id="xEw-Xl-rL6">
+                        <barButtonItem key="leftBarButtonItem" title="閉じる" style="plain" id="xEw-Xl-rL6">
                             <connections>
                                 <action selector="BackButton" destination="7FW-ii-IGK" id="roY-so-0wC"/>
                             </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="QoX-1h-FLS">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="xGp-Gb-BeV">
+                                <rect key="frame" x="302" y="5" width="92" height="34.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" cornerStyle="large">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="0.75625731613462333" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="投稿">
+                                            <attributes>
+                                                <font key="NSFont" size="18" name="HiraginoSans-W3"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="toukouButton" destination="7FW-ii-IGK" eventType="touchUpInside" id="MGu-Yr-pe5"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>

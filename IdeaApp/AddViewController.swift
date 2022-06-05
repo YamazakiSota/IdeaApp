@@ -16,63 +16,39 @@ class AddViewController:FormViewController{
     var UserName: String = ""
     var name:String = "aa"
     
+    let calendar = Calendar(identifier: .gregorian)
+    let date = Date()
+
+    
+    
+    var IdeaTitle: String?
+    var IdeaDetail: String?
+    var IdeaGenre: String?
+    var UserID: String?
+    var Username: String?
+    
+
+    
+    let i: Int = 0
+    let j: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let calendar = Calendar(identifier: .gregorian)
-        let date = Date()
+
+        tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        
         let year = calendar.component(.year, from: date) // 3
         let month = calendar.component(.month, from: date) // 3
         let day = calendar.component(.day, from: date) // 1
-        
-        
-        var IdeaTitle: String?
-        var IdeaDetail: String?
-        var IdeaGenre: String?
-        var UserID: String?
-        var Username: String?
-        
-        let Timedate = "\(year)年\(month)月\(day)日"
-        
-        let i: Int = 0
-        let j: Int = 0
-
-        
-        
-        if let user = Auth.auth().currentUser {
-            // ②ログインしているユーザー名の取得
-            Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
-                if let snap = snapshot {
-                    if let data = snap.data() {
-                        self.name = data["name"] as! String
-                    }
-                } else if let error = error {
-                    print("ユーザー名取得失敗: " + error.localizedDescription)
-                }
-                
-                print(self.name)
-                // ナビゲーションの右上にラベルをセット
-                if let navigationBar = self.navigationController?.navigationBar {
-                    let labelFrame = CGRect(x: self.view.frame.size.width - 85 , y: 0, width: 55.0, height: navigationBar.frame.height)
-                    let label = UILabel(frame: labelFrame)  // ラベルサイズと位置
-                    label.textColor = UIColor.black // テキストカラー
-                    label.text = self.name
-                    navigationBar.addSubview(label)
-                }
-                
-            })
-
-        }
-        
-        // ナビゲーションの右上にラベルをセット
+        let Timedate = "\(year).\(month).\(day)"
+        /*/ ナビゲーションの右上にラベルをセット
         if let navigationBar = self.navigationController?.navigationBar {
             let imageFrame = CGRect(x: (self.view.frame.size.width / 2) - 40, y: 3, width: 80, height: 33)
             let image = UIImageView(frame: imageFrame)  // ラベルサイズと位置
             image.image = UIImage(named: "attaraiina")
             navigationBar.addSubview(image)
-        }
-        
-        
+        }*/
         
         
         
@@ -102,12 +78,12 @@ class AddViewController:FormViewController{
             row.placeholder = "12文字まで"
             row.add(rule: RuleMaxLength(maxLength: 12))
         }.onChange{ row in
-            IdeaTitle = row.value ?? "IdeaTitle"//変数に格納
+            self.IdeaTitle = row.value ?? "IdeaTitle"//変数に格納
         }
         <<< TextAreaRow { row in
             row.placeholder = "詳細を入力"
         }.onChange{ row in
-            IdeaDetail = row.value ?? "IdeaDetail"//変数に格納
+            self.IdeaDetail = row.value ?? "IdeaDetail"//変数に格納
         }
         
         // ここからセクション2
@@ -144,7 +120,7 @@ class AddViewController:FormViewController{
 
         }.cellUpdate({ cell, row in
             row.value =   "\(self.UserName)"
-            Username = row.value
+            self.Username = row.value
         })
         
         /*日付は取得する形でいいかな
@@ -153,6 +129,8 @@ class AddViewController:FormViewController{
          $0.value = Date()
          }*/
         
+        
+        /*
         +++ Section("　")
         
         <<< ButtonRow("Button2") {row in
@@ -166,8 +144,8 @@ class AddViewController:FormViewController{
                     print("Delete button tapped")
                     //ボタンを押したときの処理
                     
-                    if let title = IdeaTitle,
-                       let detail = IdeaDetail, let Genre = IdeaGenre, let name = Username{
+                    if let title = self.IdeaTitle,
+                       let detail = self.IdeaDetail, let Genre = self.IdeaGenre, let name = self.Username{
                         // ②ログイン済みか確認
                             // ③FirestoreにTodoデータを作成する
                             let createdTime = FieldValue.serverTimestamp()
@@ -180,8 +158,8 @@ class AddViewController:FormViewController{
                                     "Genre": Genre,
                                     "Name": name,
                                     "UserID": Auth.auth().currentUser?.uid,
-                                    "LikeNum": i,
-                                    "ReportNum": j
+                                    "LikeNum": self.i,
+                                    "ReportNum": self.j
                                 ],merge: true
                                 ,completion: { error in
                                     if let error = error {
@@ -193,7 +171,7 @@ class AddViewController:FormViewController{
                                     } else {
                                         print("TODO作成成功")
                                         // ④Todo一覧画面に戻る
-                                        self.navigationController?.popViewController(animated: true)
+                                        self.dismiss(animated: true, completion: nil)
                                     }
                                 })
                         
@@ -211,7 +189,7 @@ class AddViewController:FormViewController{
                 self.present(alert, animated: true, completion: nil)
 
             }
-        }
+        }*/
         
         /*<<< ButtonRow() {
             $0.title = "Delete"
@@ -228,6 +206,66 @@ class AddViewController:FormViewController{
         
     }
     
+    @IBAction func toukouButton(){
+        
+        let year = calendar.component(.year, from: date) // 3
+        let month = calendar.component(.month, from: date) // 3
+        let day = calendar.component(.day, from: date) // 1
+        let Timedate = "\(year).\(month).\(day)"
+        
+        let alert = UIAlertController(title: "投稿", message: "投稿してもよろしいですか？", preferredStyle: .alert)
+        
+        let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
+            print("Delete button tapped")
+            //ボタンを押したときの処理
+            
+            if let title = self.IdeaTitle,
+               let detail = self.IdeaDetail, let Genre = self.IdeaGenre, let name = self.Username{
+                // ②ログイン済みか確認
+                    // ③FirestoreにTodoデータを作成する
+                    let createdTime = FieldValue.serverTimestamp()
+                    Firestore.firestore().collection("\(Genre)のideas").document().setData(
+                        [
+                            "title": title,
+                            "detail": detail,
+                            "createdAt": createdTime,
+                            "updatedAt": Timedate,
+                            "Genre": Genre,
+                            "Name": name,
+                            "UserID": Auth.auth().currentUser?.uid,
+                            "LikeNum": self.i,
+                            "ReportNum": self.j
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO作成成功")
+                                // ④Todo一覧画面に戻る
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        })
+                
+            }
+
+        })
+        
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+
+    }
+        
+    }
     
     /*
      // MARK: - Navigation
@@ -239,4 +277,4 @@ class AddViewController:FormViewController{
      }
      */
     
-}
+
