@@ -205,8 +205,8 @@
                                 <segments>
                                     <segment title="アプリ"/>
                                     <segment title="日用品"/>
-                                    <segment title="エンタメ"/>
                                     <segment title="その他"/>
+                                    <segment title="My Idea"/>
                                 </segments>
                                 <connections>
                                     <action selector="ChangeListControl:" destination="857-US-h7C" eventType="valueChanged" id="2hW-C9-iUb"/>
