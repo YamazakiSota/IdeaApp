@@ -49,7 +49,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var k: Int = 0
     var s: Int = 0
     var sc: Int = 0
-    
+    var namestr: String = ""
     var Genre: String = "アプリ"
     
     var name: String = "aa"
@@ -75,11 +75,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 print(self.name)
                 // ナビゲーションの右上にラベルをセット
-                // ラベルサイズと位置
-                //LogoutButton.titleLabel.Color = UIColor.lightGray // テキストカラー
-                //self.LogoutButton.frame = CGRect(x: self.view.frame.size.width - 80, y:0, width: 80, height: 30)
-                self.LogoutButton.setTitle(self.name, for: .normal)
-                //LogoutButton.font = UIFont(name: "Arial", size: 20)
+                self.namestr = String(self.name.prefix(4))
+                self.LogoutButton.setTitle(self.namestr, for: .normal)
+
                 
                 
             })

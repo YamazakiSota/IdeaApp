@@ -238,6 +238,7 @@ class AddViewController:FormViewController{
             print("Delete button tapped")
             //ボタンを押したときの処理
             
+            
             if let title = self.IdeaTitle,
                let detail = self.IdeaDetail,/* let Genre = self.IdeaGenre, */let name = self.Username{
                 // ②ログイン済みか確認

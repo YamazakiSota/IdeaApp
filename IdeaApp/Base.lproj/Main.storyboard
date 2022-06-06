@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2t-8I-uqj">
-                                <rect key="frame" x="62" y="584" width="290" height="203"/>
+                                <rect key="frame" x="62" y="564" width="290" height="203"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vsb-48-ncK">
                                         <rect key="frame" x="44" y="77" width="202" height="34"/>
@@ -67,8 +67,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="290" id="OfF-eo-TAc"/>
-                                    <constraint firstAttribute="height" constant="203" id="tQ6-ZH-02n"/>
+                                    <constraint firstAttribute="width" constant="290" id="rP0-Iw-kTv"/>
+                                    <constraint firstAttribute="height" constant="203" id="zIZ-6i-0X2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfp-hj-Utq">
@@ -130,12 +130,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="b2t-8I-uqj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1BB-b3-b7R"/>
                             <constraint firstItem="McM-yf-pFh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4y9-Ko-ZWY"/>
+                            <constraint firstItem="b2t-8I-uqj" firstAttribute="top" secondItem="vfp-hj-Utq" secondAttribute="bottom" constant="30" id="AgH-WL-AZD"/>
                             <constraint firstItem="vfp-hj-Utq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IBn-gv-R8r"/>
                             <constraint firstItem="vfp-hj-Utq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g2L-Ax-qTQ"/>
                             <constraint firstItem="vfp-hj-Utq" firstAttribute="top" secondItem="McM-yf-pFh" secondAttribute="bottom" constant="55" id="naR-Tv-QCD"/>
-                            <constraint firstItem="b2t-8I-uqj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oPh-WP-CxX"/>
-                            <constraint firstItem="b2t-8I-uqj" firstAttribute="top" secondItem="vfp-hj-Utq" secondAttribute="bottom" constant="50" id="x4m-SS-aoW"/>
                         </constraints>
                     </view>
                     <connections>
@@ -258,7 +258,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.99415355920000004" green="0.82501217986143704" blue="0.37671015137035507" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.93725490196078431" green="0.67450980392156867" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
                                     <attributedString key="attributedTitle"/>
                                 </buttonConfiguration>
@@ -359,7 +359,7 @@
                                 <rect key="frame" x="20" y="5" width="92" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="&lt;戻る"/>
+                                <buttonConfiguration key="configuration" style="plain" title="戻る"/>
                                 <connections>
                                     <action selector="BackButton" destination="rOn-Iu-54S" eventType="touchUpInside" id="Evd-eN-wrC"/>
                                 </connections>

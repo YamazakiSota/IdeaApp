@@ -49,6 +49,8 @@ class EditViewController: FormViewController {
         
         tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
         
+
+        
         /*if let user = Auth.auth().currentUser {
             // ②ログインしているユーザー名の取得
             Firestore.firestore().collection("users").document(user.uid).getDocument(completion: {(snapshot,error) in
