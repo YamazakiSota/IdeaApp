@@ -44,11 +44,14 @@ class EditViewController: FormViewController {
     var name: String = "aa"
     
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
-        
+       
+
+        // 戻るボタンのタイトルを"完了"に変更します。
 
         
         /*if let user = Auth.auth().currentUser {
