@@ -79,7 +79,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 self.namestr = String(self.name.prefix(4))
                 self.LogoutButton.setTitle(self.namestr, for: .normal)
-                
+                self.LogoutButton.setTitleColor(UIColor.white, for: .normal)
             })
             
         }
