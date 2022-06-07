@@ -436,7 +436,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 GetIdeaDataForFirestoreWant()
             }
-            
+            mynum = 0
         case 1:
             Genre = "日用品"
             if(sc == 0){
@@ -444,6 +444,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 GetIdeaDataForFirestoreWant()
             }
+            mynum = 0
         case 2:
             Genre = "その他"
             if(sc == 0){
@@ -451,6 +452,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 GetIdeaDataForFirestoreWant()
             }
+            mynum = 0
         case 3:
             Genre = "MyApp"
             if(sc == 0){
@@ -466,6 +468,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 GetIdeaDataForFirestoreWant()
             }
+            mynum = 0
         }
     }
     
