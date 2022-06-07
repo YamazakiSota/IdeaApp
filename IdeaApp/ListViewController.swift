@@ -105,7 +105,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //bannerの各種設定
     func BannerSet(){
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-5041739959288046/6354834758"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         addBannerViewToView(bannerView)
