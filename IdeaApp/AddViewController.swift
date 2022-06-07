@@ -61,7 +61,7 @@ class AddViewController:FormViewController{
         <<< AlertRow<String>("") {
             $0.title = "ジャンル"
             $0.selectorTitle = "ジャンルを選択"
-            $0.options = ["アプリ","日用品","エンタメ","その他"]
+            $0.options = ["アプリ","日用品","その他"]
             $0.value = "選択してください"    // 初期選択項目
         }.onChange{[unowned self] row in
             IdeaGenre = row.value ?? "選択なし"

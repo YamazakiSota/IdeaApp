@@ -22,7 +22,7 @@ class EditViewController: FormViewController {
     var NameArray: String!
     var LikeNumArray: Int!
     var ReportNumArray: Int!
-    var UserLikeId: String!
+    var UserLikeId: String = ""
     var TimeArray: String = ""
     var tem: Int = 0
     var UserName: String!
@@ -32,6 +32,7 @@ class EditViewController: FormViewController {
     var CommentNameArray: [String] = []
     var ReportIdeaArray: [String] = []
     var ReportIdeaIDArray: [String] = []
+    var commentId: [String] = []
     
     var k = 0
     var tag = 0
@@ -100,20 +101,23 @@ class EditViewController: FormViewController {
              }*/
             
             
-            Firestore.firestore().collection("\(IdeaGenre!)のideas/\(IdeaId!)/Comment").addSnapshotListener/*.getDocuments*/(/*completion: */{ (querySnapshot, error) in
+            Firestore.firestore().collection("\(IdeaGenre!)のideas/\(IdeaId!)/Comment").addSnapshotListener({ (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     var commentArray:[String] = []
                     var commentnameArray:[String] = []
+                    var commentId:[String] = []
                     for doc in querySnapshot.documents {
                         let data = doc.data()
                         commentArray.append(data["Comment"] as! String)
                         commentnameArray.append(data["Name"] as! String)
+                        commentId.append(doc.documentID)
                         self.tableView.reloadData()
                         self.sect = 1
                     }
+                    self.commentId = commentId
                     
                     if(self.sect == 1){
-                        (self.form) +++ Section("みんなからのコメント")
+                        (self.form) +++ Section("Atta!!")
                     }
                     self.sect = 0
                     print(commentArray)
@@ -122,13 +126,51 @@ class EditViewController: FormViewController {
                             listRow.placeholder = option + "\n投稿者：\(commentnameArray[self.k])"
                             listRow.disabled = true
                             listRow.tag = "\(self.tag)"
-                            self.k += 1
+                            
                             self.tag += 1
                         }.cellSetup{ cell, row in
                             cell.placeholderLabel?.textColor = .darkGray
                             cell.placeholderLabel?.tintColor = .darkGray
                         }
-                    }
+                        
+                        <<< ButtonRow() {
+                            $0.title = "コメント削除"
+                        }.cellSetup() {cell, row in
+                            cell.tintColor = UIColor.red
+                        }.onCellSelection {[unowned self] ButtonCellOf, row in
+                            let alert = UIAlertController(title: "削除", message: "このコメントを削除しますか？", preferredStyle: .alert)
+                            
+                            let delete = UIAlertAction(title: "削除する", style: .destructive, handler: { (action) -> Void in
+                                print("Delete button tapped")
+                                //ボタンを押したときの処理
+                                Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).collection("Comment").document(self.commentId[self.k]).delete(){ error in
+                                    if let error = error {
+                                        print("TODO削除失敗: " + error.localizedDescription)
+                                        let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                        dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                        self.present(dialog, animated: true, completion: nil)
+                                    } else {
+                                        print("TODO削除成功")
+                                        self.navigationController?.popViewController(animated: true)
+                                    }
+                                }
+                                
+                                
+                            })
+                            
+                            let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                                print("Cancel button tapped")
+                            })
+                            
+                            alert.addAction(delete)
+                            alert.addAction(cancel)
+                            
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        self.k += 1
+                        
+                        }
+                    
                     self.k = 0
                     
                     (self.form) +++ Section("　")
@@ -282,20 +324,21 @@ class EditViewController: FormViewController {
                     
                     
                     if let user = Auth.auth().currentUser {
-                        Firestore.firestore().collection("users/\(user.uid)/likeidea").document(    UserLikeId!).delete(){ error in
+                        Firestore.firestore().collection("users/\(user.uid)/likeidea").document(    UserLikeId).delete(){ error in
                         }
                     }
                     self.tableView.reloadData()
                 }
             }
             
-            (self.form) +++ Section("コメント")
+            (self.form) +++ Section("Atta!!")
             
             <<< TextAreaRow { row in
                 row.placeholder = "もうすでにこのアイデアがある時や\n制作したよって時に教えてあげよう！"
             }.onChange{ row in
                 self.Comment = row.value ?? "Comment"
             }
+
             
             
             <<< ButtonRow("Button2") {row in
@@ -527,7 +570,6 @@ class EditViewController: FormViewController {
             
             
         }
-        
     }
     
     func WantIdeaSet(){
