@@ -53,6 +53,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -80,6 +82,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.namestr = String(self.name.prefix(4))
                 self.LogoutButton.setTitle(self.namestr, for: .normal)
                 self.LogoutButton.setTitleColor(UIColor.white, for: .normal)
+                self.LogoutButton.contentHorizontalAlignment = .center
+
             })
             
         }
@@ -127,6 +131,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         GetWantIdea()
         GetBlockUser()
         GetReportIdea()
+    
         
         if(mynum == 0){
             if(sc == 0){

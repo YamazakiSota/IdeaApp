@@ -112,7 +112,7 @@ class AddViewController:FormViewController{
         let Timedate = "\(year).\(month).\(day)"
         
         if(self.IdeaGenre == "選択なし"){
-            let alert = UIAlertController(title: "注意", message: "ジャンルが選択されていません", preferredStyle: .alert)
+            let alert = UIAlertController(title: "ジャンルが選択されていません", message: nil, preferredStyle: .alert)
             
             let delete = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
                 print("Delete button tapped")
@@ -123,7 +123,7 @@ class AddViewController:FormViewController{
             self.present(alert, animated: true, completion: nil)
             
         }else{
-            let alert = UIAlertController(title: "投稿", message: "投稿してもよろしいですか？", preferredStyle: .alert)
+            let alert = UIAlertController(title: "アイデアを投稿しますか？", message: nil, preferredStyle: .alert)
             
             let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
                 print("Delete button tapped")
@@ -162,6 +162,39 @@ class AddViewController:FormViewController{
                         })
                     
                 }
+                
+                /*if let title = self.IdeaTitle,
+                   let detail = self.IdeaDetail,let name = self.Username{
+                    // ②ログイン済みか確認
+                    // ③FirestoreにTodoデータを作成する
+                    let createdTime = FieldValue.serverTimestamp()
+                    Firestore.firestore().collection("users").document(Auth.auth().currentUser?.uid ?? "nil").collection("myidea").document().setData(
+                        [
+                            "title": title,
+                            "detail": detail,
+                            "createdAt": createdTime,
+                            "updatedAt": Timedate,
+                            "Genre": self.IdeaGenre,
+                            "Name": name,
+                            "UserID": Auth.auth().currentUser?.uid,
+                            "LikeNum": self.i,
+                            "ReportNum": self.j
+                        ],merge: true
+                        ,completion: { error in
+                            if let error = error {
+                                // ③が失敗した場合
+                                print("アイデア投稿失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "アイデア投稿失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO作成成功")
+                                // ④Todo一覧画面に戻る
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        })
+                    
+                }*/
                 
             })
             

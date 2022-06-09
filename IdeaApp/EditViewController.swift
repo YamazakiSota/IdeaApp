@@ -138,9 +138,9 @@ class EditViewController: FormViewController {
                         }.cellSetup() {cell, row in
                             cell.tintColor = UIColor.red
                         }.onCellSelection {[unowned self] ButtonCellOf, row in
-                            let alert = UIAlertController(title: "削除", message: "このコメントを削除しますか？", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "コメントを削除しますか？", message: nil, preferredStyle: .alert)
                             
-                            let delete = UIAlertAction(title: "削除する", style: .destructive, handler: { (action) -> Void in
+                            let delete = UIAlertAction(title: "削除", style: .destructive, handler: { (action) -> Void in
                                 print("Delete button tapped")
                                 //ボタンを押したときの処理
                                 Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).collection("Comment").document(self.commentId[self.k]).delete(){ error in
@@ -173,47 +173,49 @@ class EditViewController: FormViewController {
                     
                     self.k = 0
                     
-                    (self.form) +++ Section("　")
-                    
-                    <<< ButtonRow() {
-                        $0.title = "削除"
-                    }.cellSetup() {cell, row in
-                        
-                        cell.tintColor = UIColor.red
-                    }.onCellSelection {[unowned self] ButtonCellOf, row in
-                        
-                        let alert = UIAlertController(title: "削除", message: "この投稿を削除しますか？", preferredStyle: .alert)
-                        
-                        let delete = UIAlertAction(title: "削除する", style: .destructive, handler: { (action) -> Void in
-                            print("Delete button tapped")
-                            //ボタンを押したときの処理
-                            Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
-                                if let error = error {
-                                    print("TODO削除失敗: " + error.localizedDescription)
-                                    let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
-                                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(dialog, animated: true, completion: nil)
-                                } else {
-                                    print("TODO削除成功")
-                                    self.navigationController?.popViewController(animated: true)
-                                }
-                            }
-                            
-                        })
-                        
-                        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
-                            print("Cancel button tapped")
-                        })
-                        
-                        alert.addAction(delete)
-                        alert.addAction(cancel)
-                        
-                        self.present(alert, animated: true, completion: nil)
-                    }
+
                     self.tableView.reloadData()
                 } else if let error = error {
                     print("取得失敗: ccc" + error.localizedDescription)
                 }
+                (self.form) +++ Section("　")
+                
+                <<< ButtonRow() {
+                    $0.title = "削除"
+                }.cellSetup() {cell, row in
+                    
+                    cell.tintColor = UIColor.red
+                }.onCellSelection {[unowned self] ButtonCellOf, row in
+                    
+                    let alert = UIAlertController(title: nil, message: "アイデアを削除しますか？", preferredStyle: .alert)
+                    
+                    let delete = UIAlertAction(title: "削除", style: .destructive, handler: { (action) -> Void in
+                        print("Delete button tapped")
+                        //ボタンを押したときの処理
+                        Firestore.firestore().collection("\(self.IdeaGenre!)のideas").document(self.IdeaId).delete(){ error in
+                            if let error = error {
+                                print("TODO削除失敗: " + error.localizedDescription)
+                                let dialog = UIAlertController(title: "TODO削除失敗", message: error.localizedDescription, preferredStyle: .alert)
+                                dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(dialog, animated: true, completion: nil)
+                            } else {
+                                print("TODO削除成功")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                        
+                    })
+                    
+                    let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                        print("Cancel button tapped")
+                    })
+                    
+                    alert.addAction(delete)
+                    alert.addAction(cancel)
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
             })
             
             
@@ -346,7 +348,7 @@ class EditViewController: FormViewController {
                 row.title = "投稿する"
             }.onCellSelection{[unowned self] ButtonCellOf, row in
                 
-                let alert = UIAlertController(title: "コメント投稿", message: "コメントを投稿してもよろしいですか？\nコメントは削除することができません。", preferredStyle: .alert)
+                let alert = UIAlertController(title: "コメントを投稿しますか？", message: "この操作は取り消せません", preferredStyle: .alert)
                 
                 let delete = UIAlertAction(title: "投稿", style: .default, handler: { (action) -> Void in
                     print("Delete button tapped")
@@ -428,9 +430,9 @@ class EditViewController: FormViewController {
                         cell.tintColor = UIColor.red
                     }.onCellSelection {[unowned self] ButtonCellOf, row in
                         
-                        let alert = UIAlertController(title: "ブロック", message: "このユーザーをブロックしますか？", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "このユーザーをブロックしますか？", message: nil, preferredStyle: .alert)
                         
-                        let delete = UIAlertAction(title: "ブロックする", style: .destructive, handler: { (action) -> Void in
+                        let delete = UIAlertAction(title: "ブロック", style: .destructive, handler: { (action) -> Void in
                             print("Delete button tapped")
                             //ボタンを押したときの処理
                             if let user = Auth.auth().currentUser {
@@ -470,9 +472,9 @@ class EditViewController: FormViewController {
                         cell.tintColor = UIColor.red
                     }.onCellSelection{[unowned self] ButtonCellOf, row in
                         
-                        let alert = UIAlertController(title: "報告", message: "この投稿を報告しますか？", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "この投稿を報告しますか？", message: nil, preferredStyle: .alert)
                         
-                        let delete = UIAlertAction(title: "報告する", style: .destructive, handler: { (action) -> Void in
+                        let delete = UIAlertAction(title: "報告", style: .destructive, handler: { (action) -> Void in
                             print("Delete button tapped")
                             //ボタンを押したときの処理
                             
