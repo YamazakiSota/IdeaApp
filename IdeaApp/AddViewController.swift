@@ -19,7 +19,7 @@ class AddViewController:FormViewController{
     let date = Date()
     var IdeaTitle: String?
     var IdeaDetail: String?
-    var IdeaGenre: String = "選択なし"
+    var IdeaGenreA: String = "選択なし"
     var UserID: String?
     var Username: String?
     
@@ -64,7 +64,7 @@ class AddViewController:FormViewController{
             $0.options = ["アプリ","日用品","その他"]
             $0.value = "選択してください"    // 初期選択項目
         }.onChange{[unowned self] row in
-            IdeaGenre = row.value ?? "選択なし"
+            IdeaGenreA = row.value ?? "選択なし"
         }
         
         // ここからセクション3
@@ -109,9 +109,13 @@ class AddViewController:FormViewController{
         let year = calendar.component(.year, from: date) // 3
         let month = calendar.component(.month, from: date) // 3
         let day = calendar.component(.day, from: date) // 1
-        let Timedate = "\(year).\(month).\(day)"
         
-        if(self.IdeaGenre == "選択なし"){
+        let zeroFilledM = String(format: "%02d", month)
+        let zeroFilledD = String(format: "%02d", day)
+        
+        let Timedate = "\(year).\(zeroFilledM).\(zeroFilledD)"
+        
+        if(self.IdeaGenreA == "選択なし"){
             let alert = UIAlertController(title: "ジャンルが選択されていません", message: nil, preferredStyle: .alert)
             
             let delete = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
@@ -135,13 +139,13 @@ class AddViewController:FormViewController{
                     // ②ログイン済みか確認
                     // ③FirestoreにTodoデータを作成する
                     let createdTime = FieldValue.serverTimestamp()
-                    Firestore.firestore().collection("\(self.IdeaGenre)のideas").document().setData(
+                    Firestore.firestore().collection("\(self.IdeaGenreA)のideas").document().setData(
                         [
                             "title": title,
                             "detail": detail,
                             "createdAt": createdTime,
                             "updatedAt": Timedate,
-                            "Genre": self.IdeaGenre,
+                            "Genre": self.IdeaGenreA,
                             "Name": name,
                             "UserID": Auth.auth().currentUser?.uid,
                             "LikeNum": self.i,

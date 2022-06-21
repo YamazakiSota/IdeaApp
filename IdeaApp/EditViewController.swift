@@ -14,6 +14,9 @@ import ImageRow
 class EditViewController: FormViewController {
     
     
+    @IBOutlet weak var ShareButton: UIButton!
+    
+    
     var IdeaId: String!
     var IdeaTitle: String!
     var IdeaDetail: String!
@@ -47,10 +50,14 @@ class EditViewController: FormViewController {
         
         tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
         
+
+        
+        self.ShareButton.contentHorizontalAlignment = .center
+        
+        
         ReportIdeaSet()
         WantIdeaSet()
         GetUserName()
-        
         
         if(self.NameIDArray == Auth.auth().currentUser?.uid){
             //自分の投稿の場合
@@ -315,6 +322,27 @@ class EditViewController: FormViewController {
                         ,completion: { error in
                         })
                     
+                    let alert = UIAlertController(title: "このアイデアを知らせよう！！", message: nil, preferredStyle: .alert)
+                    
+                    let delete = UIAlertAction(title: "共有", style: .default, handler: { (action) -> Void in
+                        print("Delete button tapped")
+                        //ボタンを押したときの処理
+
+                        let activityItems = ["『\(self.IdeaTitle!)』\n(\(self.IdeaDetail!))\n投稿者：\(self.NameArray!)\n\nアプリはここから\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
+                        let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                        self.present(activityVC, animated: true)
+                        
+                    })
+                    
+                    let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+                        print("Cancel button tapped")
+                    })
+                    
+                    alert.addAction(delete)
+                    alert.addAction(cancel)
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
                     self.tableView.reloadData()
                 }else{
                     self.LikeNumArray! -= 1
@@ -331,6 +359,10 @@ class EditViewController: FormViewController {
                     }
                     self.tableView.reloadData()
                 }
+                
+                
+                
+                
             }
             
             (self.form) +++ Section("Atta!!")
@@ -550,6 +582,8 @@ class EditViewController: FormViewController {
                         
                         
                     }
+                    
+                    
                     self.tableView.reloadData()
                 } else if let error = error {
                     print("取得失敗: ccc" + error.localizedDescription)
@@ -626,6 +660,12 @@ class EditViewController: FormViewController {
         }
     }
     
+    @IBAction func TapShareButton(){
+        let activityItems = ["『\(self.IdeaTitle!)』\n(\(self.IdeaDetail!))\n投稿者：\(self.NameArray!)\n\nアプリはここから\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
+        let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        self.present(activityVC, animated: true)
+    }
+
     /*
      // MARK: - Navigation
      

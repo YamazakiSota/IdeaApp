@@ -40,6 +40,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var currentName:[String] = []
     
     var tem: Int = 0
+    var temp: Int = 0
     var k: Int = 0
     var s: Int = 0
     var sc: Int = 0
@@ -336,16 +337,82 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
         
-        if(sc == 0){
-            cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
-        }else{
-            cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+        if cell.accessoryView == nil {
+
         }
+        
+        
+        for i in self.LikeIdArray{
+            if(i == self.IdeaIdArray[indexPath.row]){
+                self.temp = 1
+                break
+            }else {
+                self.temp = 0
+            }
+        }
+        
+        if(self.temp == 1){
+            
+            if(sc == 0){
+                if(mynum == 1){
+                    cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
+                    cell.accessoryView = nil
+                }else{
+                    cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
+                    
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
+                    imgView.image = UIImage(named: "hosii2")!
+                    cell.accessoryView = imgView
+ 
+                    
+                    
+                }
+            }else{
+                if(mynum == 1){
+                    cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
+                    cell.accessoryView = nil
+                }else{
+                    cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+                    
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
+                    imgView.image = UIImage(named: "hosii2")!
+                    cell.accessoryView = imgView
+                }
+            }
+            
+        }else{
+            
+            if(sc == 0){
+                if(mynum == 1){
+                    cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
+                    cell.accessoryView = nil
+                }else{
+                    cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
+                    imgView.image = UIImage(named: "hosii1")!
+                    cell.accessoryView = imgView
+                }
+            }else{
+                if(mynum == 1){
+                    cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
+                    cell.accessoryView = nil
+                }else{
+                    cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
+                    imgView.image = UIImage(named: "hosii1")!
+                    cell.accessoryView = imgView
+                }
+            }
+            
+        }
+        
+
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
         cell.detailTextLabel?.textColor = UIColor.lightGray
         
+        self.temp = 0
         return cell
     }
     
@@ -354,6 +421,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return 80
     }
     
+
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -406,8 +474,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBAction func tapLogoutButton(_ sender: Any) {
-        let alert = UIAlertController(title: "ログアウト", message: "ログアウトしますか？", preferredStyle: .alert)
-        let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
+        let alert = UIAlertController(title: "ログアウトしますか？", message: nil, preferredStyle: .alert)
+        let delete = UIAlertAction(title: "ログアウト", style: .destructive, handler: { (action) -> Void in
             if Auth.auth().currentUser != nil {
                 do {
                     try Auth.auth().signOut()

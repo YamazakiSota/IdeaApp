@@ -6,7 +6,6 @@
 //
 
 import UIKit
-// ↓ここと
 import Firebase
 // ↓Firebaseとは関係ないですがこちらも記述しておいてください
 import IQKeyboardManagerSwift
