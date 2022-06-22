@@ -322,27 +322,32 @@ class EditViewController: FormViewController {
                         ,completion: { error in
                         })
                     
+                    let randomInt = Int.random(in: 1..<4)
+                    print("\(randomInt)aaa")
+                    if(randomInt == 1){
                     let alert = UIAlertController(title: "このアイデアを知らせよう！！", message: nil, preferredStyle: .alert)
                     
                     let delete = UIAlertAction(title: "共有", style: .default, handler: { (action) -> Void in
                         print("Delete button tapped")
                         //ボタンを押したときの処理
-
-                        let activityItems = ["『\(self.IdeaTitle!)』\n(\(self.IdeaDetail!))\n投稿者：\(self.NameArray!)\n\nアプリはここから\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
+                        let activityItems = ["私も『\(self.IdeaTitle!)』が欲しい！\n\nあなたも「あったらいいな」をシェアしよう！！\n(もしかしたら作ってもらえるかも...)\n\nダウンロードはこちら\n(iPhoneのみ)\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
                         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
                         self.present(activityVC, animated: true)
+                        self.navigationController?.popViewController(animated: true)
+                    
                         
                     })
                     
                     let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
                         print("Cancel button tapped")
+                        self.navigationController?.popViewController(animated: true)
                     })
                     
                     alert.addAction(delete)
                     alert.addAction(cancel)
                     
                     self.present(alert, animated: true, completion: nil)
-                    
+                    }
                     self.tableView.reloadData()
                 }else{
                     self.LikeNumArray! -= 1
@@ -661,7 +666,7 @@ class EditViewController: FormViewController {
     }
     
     @IBAction func TapShareButton(){
-        let activityItems = ["『\(self.IdeaTitle!)』\n(\(self.IdeaDetail!))\n投稿者：\(self.NameArray!)\n\nアプリはここから\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
+        let activityItems = ["私も『\(self.IdeaTitle!)』が欲しい！\n\nあなたも「あったらいいな」をシェアしよう！！\n(もしかしたら作ってもらえるかも...)\n\nダウンロードはこちら\n(iPhoneのみ)\nhttps://apps.apple.com/jp/app/%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E3%81%84%E3%81%84%E3%81%AA/id1628333605"]
         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         self.present(activityVC, animated: true)
     }

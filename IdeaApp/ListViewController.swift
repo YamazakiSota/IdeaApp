@@ -15,6 +15,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
     @IBOutlet weak var OrderSegmentedControl: UISegmentedControl!
     @IBOutlet weak var LogoutButton: UIButton!
+    @IBOutlet weak var AddButton: UIButton!
     
     var bannerView: GADBannerView!
     var IdeaIdArray: [String] = []
@@ -84,7 +85,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.LogoutButton.setTitle(self.namestr, for: .normal)
                 self.LogoutButton.setTitleColor(UIColor.white, for: .normal)
                 self.LogoutButton.contentHorizontalAlignment = .center
-
+                
             })
             
         }
@@ -132,7 +133,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         GetWantIdea()
         GetBlockUser()
         GetReportIdea()
-    
+        
+        print(Genre)
+        
         
         if(mynum == 0){
             if(sc == 0){
@@ -146,7 +149,10 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 ChangeMyWant()
             }
+            
         }
+        
+        self.tableView.reloadData()
     }
     
     //ここからViewWillApper内の関数
@@ -328,6 +334,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(IdeaTitleArray)
         return IdeaTitleArray.count
     }
     
@@ -336,10 +343,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
-        
-        if cell.accessoryView == nil {
-
-        }
         
         
         for i in self.LikeIdArray{
@@ -356,14 +359,14 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(sc == 0){
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
+                    
                     cell.accessoryView = nil
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
-                    imgView.image = UIImage(named: "hosii2")!
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    imgView.image = UIImage(named: "hoshii1")!
                     cell.accessoryView = imgView
- 
                     
                     
                 }
@@ -374,10 +377,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
-                    imgView.image = UIImage(named: "hosii2")!
-                    cell.accessoryView = imgView
-                }
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    imgView.image = UIImage(named: "hoshii1")!
+                    cell.accessoryView = imgView                }
             }
             
         }else{
@@ -385,28 +387,45 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(sc == 0){
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    cell.accessoryView = nil
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    imgView.image = UIImage(named: "hoshii3")!
+                    cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
-                    imgView.image = UIImage(named: "hosii1")!
-                    cell.accessoryView = imgView
+                    
+                    if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        imgView.image = UIImage(named: "hoshii3")!
+                        cell.accessoryView = imgView
+                    }else{
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        imgView.image = UIImage(named: "hoshii2")!
+                        cell.accessoryView = imgView
+                    }
                 }
             }else{
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    cell.accessoryView = nil
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    imgView.image = UIImage(named: "hoshii3")!
+                    cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 29, height: 40))
-                    imgView.image = UIImage(named: "hosii1")!
-                    cell.accessoryView = imgView
+                    if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        imgView.image = UIImage(named: "hoshii3")!
+                        cell.accessoryView = imgView
+                    }else{
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        imgView.image = UIImage(named: "hoshii2")!
+                        cell.accessoryView = imgView
+                    }
                 }
             }
             
         }
         
-
+        
         
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
@@ -421,7 +440,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return 80
     }
     
-
+    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -466,11 +485,11 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     
-    @IBAction func tapAddButton(_ sender: Any){
-        let storyboard: UIStoryboard = self.storyboard!
-        let next = storyboard.instantiateViewController(withIdentifier: "NaviViewController")
-        self.present(next, animated: true, completion: nil)
-    }
+    /* @IBAction func tapAddButton(_ sender: Any){
+     let storyboard: UIStoryboard = self.storyboard!
+     let next = storyboard.instantiateViewController(withIdentifier: "NaviViewController")
+     self.present(next, animated: true, completion: nil)
+     }*/
     
     
     @IBAction func tapLogoutButton(_ sender: Any) {
@@ -504,6 +523,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         switch sender.selectedSegmentIndex {
         case 0:
             Genre = "アプリ"
+            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -512,6 +532,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 1:
             Genre = "日用品"
+            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -520,6 +541,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 2:
             Genre = "その他"
+            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -528,6 +550,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 3:
             Genre = "MyApp"
+            AddButton.isHidden = true
             if(sc == 0){
                 ChangeMyNew()
             }else{
@@ -536,6 +559,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 1
         default:
             Genre = "アプリ"
+            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{

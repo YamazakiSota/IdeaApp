@@ -100,7 +100,8 @@ class AddViewController:FormViewController{
     }
     
     @IBAction func BackButton(){
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -161,7 +162,8 @@ class AddViewController:FormViewController{
                             } else {
                                 print("TODO作成成功")
                                 // ④Todo一覧画面に戻る
-                                self.dismiss(animated: true, completion: nil)
+                                //self.dismiss(animated: true, completion: nil)
+                                self.navigationController?.popViewController(animated: true)
                             }
                         })
                     

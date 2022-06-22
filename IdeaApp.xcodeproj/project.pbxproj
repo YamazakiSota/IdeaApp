@@ -24,6 +24,8 @@
 		022CDE59F7B1C8510FB20171 /* Pods-IdeaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp.release.xcconfig"; path = "Target Support Files/Pods-IdeaApp/Pods-IdeaApp.release.xcconfig"; sourceTree = "<group>"; };
 		1F6C9CF5A51AFFD3FEC195BE /* Pods-IdeaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp.debug.xcconfig"; path = "Target Support Files/Pods-IdeaApp/Pods-IdeaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E46F702628356935009F6834 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E4CED8BF286243B6000C7619 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		E4CED8C0286243B7000C7619 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E4E965BF283409CB00ACDABB /* IdeaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IdeaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E965C2283409CB00ACDABB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4E965C4283409CB00ACDABB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = E4E965B6283409CB00ACDABB;
 			productRefGroup = E4E965C0283409CB00ACDABB /* Products */;
@@ -235,6 +238,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E4E965C9283409CB00ACDABB /* Base */,
+				E4CED8BF286243B6000C7619 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -243,6 +247,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E4E965CE283409D100ACDABB /* Base */,
+				E4CED8C0286243B7000C7619 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -314,6 +320,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

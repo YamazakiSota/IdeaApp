@@ -226,7 +226,7 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="tapAddButton:" destination="857-US-h7C" eventType="touchUpInside" id="Pko-cf-VMZ"/>
+                                    <segue destination="7FW-ii-IGK" kind="show" id="z3m-IY-cFJ"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vdf-oy-4yc">
@@ -276,6 +276,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="AddButton" destination="yXv-sy-Dw1" id="Uip-g9-h5f"/>
                         <outlet property="ListSegmentedControl" destination="ECm-HE-DS1" id="OEP-LS-kII"/>
                         <outlet property="LogoutButton" destination="gUp-Oh-QDZ" id="TBE-3P-067"/>
                         <outlet property="OrderSegmentedControl" destination="Vdf-oy-4yc" id="OmU-iR-XHR"/>
@@ -286,22 +287,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzs-Fe-vAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3693" y="110"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="BjD-aD-w5z">
-            <objects>
-                <navigationController storyboardIdentifier="NaviViewController" id="eBc-fi-X5K" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DAJ-kz-t5J">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="7FW-ii-IGK" kind="relationship" relationship="rootViewController" id="hvz-FO-e1u"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lWC-bC-aoP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="28" y="745"/>
         </scene>
         <!--Add View Controller-->
         <scene sceneID="NvP-18-TBa">
@@ -314,11 +299,6 @@
                         <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Soi-9W-BBL">
-                        <barButtonItem key="leftBarButtonItem" title="閉じる" style="plain" id="xEw-Xl-rL6">
-                            <connections>
-                                <action selector="BackButton" destination="7FW-ii-IGK" id="roY-so-0wC"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="QoX-1h-FLS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="xGp-Gb-BeV">
                                 <rect key="frame" x="302" y="5" width="92" height="34.5"/>
@@ -346,7 +326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYn-YF-Jkp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="823" y="761"/>
+            <point key="canvasLocation" x="4738" y="897"/>
         </scene>
         <!--Edit View Controller-->
         <scene sceneID="u3O-yq-wUx">
@@ -362,7 +342,7 @@
                     <navigationItem key="navigationItem" id="9W1-mW-iT9">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="CCH-bp-i3h">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="6sF-kn-Nn8">
-                                <rect key="frame" x="298" y="5" width="96" height="34"/>
+                                <rect key="frame" x="298" y="4.5" width="96" height="35.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
@@ -373,7 +353,7 @@
                                         <fragment content="共有">
                                             <attributes>
                                                 <color key="NSColor" red="0.11646219342947006" green="0.50700032711029053" blue="0.85999947786331177" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="18" name=".HiraKakuInterface-W3"/>
+                                                <font key="NSFont" metaFont="system" size="18"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
