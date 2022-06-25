@@ -161,9 +161,9 @@ class AddViewController:FormViewController{
                                 self.present(dialog, animated: true, completion: nil)
                             } else {
                                 print("TODO作成成功")
-                                // ④Todo一覧画面に戻る
                                 //self.dismiss(animated: true, completion: nil)
-                                self.navigationController?.popViewController(animated: true)
+                                //self.navigationController?.popViewController(animated: true)
+                                self.performSegue(withIdentifier: "toBackViewController", sender: nil)
                             }
                         })
                     

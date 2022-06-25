@@ -126,6 +126,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
         if let indexPath = tableView.indexPathForSelectedRow{
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -364,7 +365,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                     imgView.image = UIImage(named: "hoshii1")!
                     cell.accessoryView = imgView
                     
@@ -377,7 +378,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                     imgView.image = UIImage(named: "hoshii1")!
                     cell.accessoryView = imgView                }
             }
@@ -387,18 +388,18 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(sc == 0){
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                     imgView.image = UIImage(named: "hoshii3")!
                     cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
                     
                     if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                         imgView.image = UIImage(named: "hoshii3")!
                         cell.accessoryView = imgView
                     }else{
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                         imgView.image = UIImage(named: "hoshii2")!
                         cell.accessoryView = imgView
                     }
@@ -406,17 +407,17 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else{
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                     imgView.image = UIImage(named: "hoshii3")!
                     cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
                     if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                         imgView.image = UIImage(named: "hoshii3")!
                         cell.accessoryView = imgView
                     }else{
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 33, height: 30))
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
                         imgView.image = UIImage(named: "hoshii2")!
                         cell.accessoryView = imgView
                     }
@@ -523,7 +524,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         switch sender.selectedSegmentIndex {
         case 0:
             Genre = "アプリ"
-            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -532,7 +532,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 1:
             Genre = "日用品"
-            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -541,7 +540,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 2:
             Genre = "その他"
-            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{
@@ -550,7 +548,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 0
         case 3:
             Genre = "MyApp"
-            AddButton.isHidden = true
             if(sc == 0){
                 ChangeMyNew()
             }else{
@@ -559,7 +556,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             mynum = 1
         default:
             Genre = "アプリ"
-            AddButton.isHidden = false
             if(sc == 0){
                 GetIdeaDataForFirestoreNew()
             }else{

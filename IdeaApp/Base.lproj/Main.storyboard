@@ -323,6 +323,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="DUc-SP-nDL" kind="show" identifier="toBackViewController" id="Hnd-Za-uNi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYn-YF-Jkp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -374,6 +377,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UkC-Pp-w2N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4738" y="110"/>
+        </scene>
+        <!--Back View Controller-->
+        <scene sceneID="CpS-56-fPj">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="DUc-SP-nDL" customClass="BackViewController" customModule="IdeaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4FH-un-Nu0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-Gs-GZ4">
+                                <rect key="frame" x="57" y="410.5" width="300" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Jx7-tO-A7M"/>
+                                    <constraint firstAttribute="height" constant="75" id="S6a-Pj-hcr"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="リストに戻る" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.99415355920000004" green="0.59361180140000003" blue="0.38585660770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="BackToList" destination="DUc-SP-nDL" eventType="touchUpInside" id="wnQ-Qc-2eo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lJI-Ws-1WI"/>
+                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="mxd-Gs-GZ4" firstAttribute="centerY" secondItem="4FH-un-Nu0" secondAttribute="centerY" id="8Qh-4w-vaO"/>
+                            <constraint firstItem="mxd-Gs-GZ4" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="Sr6-GI-JZ4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="5Mh-kZ-XKR"/>
+                    <connections>
+                        <outlet property="BackButton" destination="mxd-Gs-GZ4" id="3kn-oW-atI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JWV-Kd-kXk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5871" y="897"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xUY-XV-Y0n">

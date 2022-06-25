@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E395B56141FB3A3FDC26E90 /* Pods_IdeaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D6B93AC84D4EED95A03E5 /* Pods_IdeaApp.framework */; };
+		E41EBB8928637D1D00E0B6B7 /* BackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41EBB8828637D1D00E0B6B7 /* BackViewController.swift */; };
 		E46F702728356935009F6834 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E46F702628356935009F6834 /* GoogleService-Info.plist */; };
 		E4E965C3283409CB00ACDABB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965C2283409CB00ACDABB /* AppDelegate.swift */; };
 		E4E965C5283409CB00ACDABB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E965C4283409CB00ACDABB /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		022CDE59F7B1C8510FB20171 /* Pods-IdeaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp.release.xcconfig"; path = "Target Support Files/Pods-IdeaApp/Pods-IdeaApp.release.xcconfig"; sourceTree = "<group>"; };
 		1F6C9CF5A51AFFD3FEC195BE /* Pods-IdeaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp.debug.xcconfig"; path = "Target Support Files/Pods-IdeaApp/Pods-IdeaApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E41EBB8828637D1D00E0B6B7 /* BackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackViewController.swift; sourceTree = "<group>"; };
 		E46F702628356935009F6834 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4CED8BF286243B6000C7619 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		E4CED8C0286243B7000C7619 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				E4E965DA28340D0900ACDABB /* EditViewController.swift */,
 				E4E965D828340CFB00ACDABB /* AddViewController.swift */,
 				E4E965C8283409CB00ACDABB /* Main.storyboard */,
+				E41EBB8828637D1D00E0B6B7 /* BackViewController.swift */,
 				E4E965CB283409D100ACDABB /* Assets.xcassets */,
 				E4E965CD283409D100ACDABB /* LaunchScreen.storyboard */,
 				E4E965D0283409D100ACDABB /* Info.plist */,
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E41EBB8928637D1D00E0B6B7 /* BackViewController.swift in Sources */,
 				E4E965D928340CFB00ACDABB /* AddViewController.swift in Sources */,
 				E4E965C7283409CB00ACDABB /* ViewController.swift in Sources */,
 				E4E965DB28340D0900ACDABB /* EditViewController.swift in Sources */,
