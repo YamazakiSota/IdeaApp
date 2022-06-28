@@ -216,6 +216,16 @@ class AddViewController:FormViewController{
         }
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toBackViewController" {
+            let nextVC = segue.destination as! BackViewController
+            nextVC.Title = self.IdeaTitle!
+            nextVC.name = self.Username!
+        }
+    }
+    
+    
 }
 
 /*

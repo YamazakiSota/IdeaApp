@@ -494,8 +494,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBAction func tapLogoutButton(_ sender: Any) {
-        let alert = UIAlertController(title: "ログアウトしますか？", message: nil, preferredStyle: .alert)
-        let delete = UIAlertAction(title: "ログアウト", style: .destructive, handler: { (action) -> Void in
+        let alert = UIAlertController(title:nil, message:  "操作を選んでください", preferredStyle: .alert)
+        let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
             if Auth.auth().currentUser != nil {
                 do {
                     try Auth.auth().signOut()
@@ -509,9 +509,19 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
         })
+        let defaultAction: UIAlertAction = UIAlertAction(title: "利用規約を読む", style: .default, handler:{
+            (action: UIAlertAction!) -> Void in
+            let url = URL(string: "https://termsandpolicy-sota-inc.netlify.app/")!
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        })
+        
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
         })
-        alert.addAction(delete)
+        
+        alert.addAction(defaultAction)
+        alert.addAction(delete) 
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
     }
@@ -672,7 +682,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.LikeNumArray = likenumArray
                 self.TimeArray = timeArray
                 self.ReportNumArray = reportnumArray
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
             } else if let error = error {
                 print("取得失敗: ccc" + error.localizedDescription)
             }
@@ -726,7 +736,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.LikeNumArray += likenumArray
                 self.TimeArray += timeArray
                 self.ReportNumArray += reportnumArray
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
             } else if let error = error {
                 print("取得失敗: ccc" + error.localizedDescription)
             }
@@ -833,7 +843,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.LikeNumArray = likenumArray
                 self.TimeArray = timeArray
                 self.ReportNumArray = reportnumArray
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
             } else if let error = error {
                 print("取得失敗: ccc" + error.localizedDescription)
             }
@@ -887,7 +897,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.LikeNumArray += likenumArray
                 self.TimeArray += timeArray
                 self.ReportNumArray += reportnumArray
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
             } else if let error = error {
                 print("取得失敗: ccc" + error.localizedDescription)
             }
@@ -955,6 +965,9 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
      // Pass the selected object to the new view controller.
      }
      */
+    
+    
+    
     
     
     
