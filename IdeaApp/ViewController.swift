@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var RegisterEmailTextField: UITextField!
     @IBOutlet weak var RegisterPasswordTextField: UITextField!
     @IBOutlet weak var RegisterNameTextField: UITextField!
+    @IBOutlet weak var CheckButton: UIButton!
+    @IBOutlet weak var RegisterButton: UIButton!
     
     
     var window: UIWindow?
@@ -27,18 +29,35 @@ class ViewController: UIViewController {
     var BlockUser: String = "YYY"
     var ReportIdea: String = "ZZZ"
     
+    var checked = false
+    
+    @IBAction func CheckButtonAction(){
+        switch checked {
+                case false:
+                    CheckButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+                    checked = true
+                case true:
+                    CheckButton.setImage(nil, for: .normal)
+                    checked = false
+                }
+            }
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Loginview.layer.cornerRadius = 30
         Registerview.layer.cornerRadius = 30
-        
+        CheckButton.layer.borderWidth = 2
+        CheckButton.layer.borderColor = UIColor.gray.cgColor
+
     }
     
     @IBAction func tapRegisterButton(_ sender: Any) {
         
-        
-        let alert = UIAlertController(title: "新規登録しますか？", message: "利用規約に同意したとみなします。", preferredStyle: .alert)
+        if(checked == true){
+        let alert = UIAlertController(title: "新規登録しますか？", message: nil, preferredStyle: .alert)
         let defaultAction: UIAlertAction = UIAlertAction(title: "新規登録", style: .default, handler:{
             (action: UIAlertAction!) -> Void in
             
@@ -105,6 +124,11 @@ class ViewController: UIViewController {
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
         
+        }else if(checked == false){
+            let dialog = UIAlertController(title: "新規登録失敗", message: "利用規約に同意してください", preferredStyle: .alert)
+            dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(dialog, animated: true, completion: nil)
+        }
     }
     
     @IBAction func tapRiyoukiyakutButton(_ sender: Any) {

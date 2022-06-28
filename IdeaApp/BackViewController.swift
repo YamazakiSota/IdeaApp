@@ -22,6 +22,7 @@ class BackViewController: UIViewController {
     
     var bannerView: GADBannerView!
     var Title: String = ""
+    var Titlestr: String = ""
     var name: String = ""
     var randomInt: Int = 0
     var ImageName: String = ""
@@ -41,7 +42,8 @@ class BackViewController: UIViewController {
         AppButton.contentVerticalAlignment = .fill
         AppButton.layer.borderColor = UIColor.gray.cgColor  // 枠線の色
         AppButton.layer.borderWidth = 5.0 // 枠線の太さ*/
-        IdeaTitleLabel.text = "『\(self.Title)』"
+        self.Titlestr = String(self.Title.prefix(14))
+        IdeaTitleLabel.text = "『\(self.Titlestr)』"
         
         
         self.randomInt = Int.random(in: 1..<5)
