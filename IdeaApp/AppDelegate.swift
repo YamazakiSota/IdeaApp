@@ -7,7 +7,6 @@
 
 import UIKit
 import Firebase
-// ↓Firebaseとは関係ないですがこちらも記述しておいてください
 import IQKeyboardManagerSwift
 import GoogleMobileAds
 
