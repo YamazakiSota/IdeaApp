@@ -9,14 +9,17 @@ import UIKit
 import Firebase
 import GoogleMobileAds
 
-class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
+class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UIGestureRecognizerDelegate {
+    
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var ListSegmentedControl: UISegmentedControl!
     @IBOutlet weak var OrderSegmentedControl: UISegmentedControl!
     @IBOutlet weak var LogoutButton: UIButton!
     @IBOutlet weak var AddButton: UIButton!
+    @IBOutlet weak var NameButton: UIButton!
     
+    var hoshiibuttons = Array<UIButton>()
     var bannerView: GADBannerView!
     var IdeaIdArray: [String] = []
     var IdeaTitleArray: [String] = []
@@ -50,12 +53,23 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var Genre: String = "アプリ"
     var name: String = "aa"
     
+    var iine = UIColor(red: 234.0/255.0, green: 170.0/255.0, blue: 67.0/255.0, alpha: 1.0)
+    var my = UIColor(red: 226.0/255.0, green: 225.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+    
+    var addBarButtonItem: UIBarButtonItem!      // +ボタン
+    var editBarButtonItem: UIBarButtonItem!
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        //self.navigationController?.navigationBar.barTintColor = UIColor(red: 242/255, green: 244/255, blue: 232/255, alpha: 1)
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -64,11 +78,222 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ImageSet()
         BackbuttonSet()
         
-        BannerSet()
+        //BannerSet()
+        self.tableView.reloadData()
         
+        //AddButtonDesine()
+        
+        //左スワイプ
+        let leftSwipeGesture = UISwipeGestureRecognizer(
+                target: self,
+        action: #selector(ListViewController.getSwipe(_:))
+        )
+        leftSwipeGesture.direction = .left
+        self.view.addGestureRecognizer(leftSwipeGesture)
+                
+        //右スワイプ
+        let rightSwipeGesture = UISwipeGestureRecognizer(
+                target: self,
+                action: #selector(ListViewController.getSwipe(_:))
+        )
+        rightSwipeGesture.direction = .right
+        self.view.addGestureRecognizer(rightSwipeGesture)
+        
+        
+ 
+        addBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down")!, style: .plain, target: self, action: #selector(addBarButtonTapped(_:)))
+        editBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill")!, style: .plain, target: self, action: #selector(editBarButtonTapped(_:)))
+                // ③バーボタンアイテムの追加
+        self.navigationItem.rightBarButtonItems = [editBarButtonItem, addBarButtonItem]
+        self.navigationController?.navigationBar.tintColor = UIColor.darkGray
+        
+
+    }
+    
+    @objc func addBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        let alert: UIAlertController = UIAlertController(title: nil, message:nil, preferredStyle:  UIAlertController.Style.actionSheet)
+        
+
+        let defaultAction_1: UIAlertAction = UIAlertAction(title: "新着順", style: UIAlertAction.Style.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            
+            if(self.mynum == 0){
+                self.GetIdeaDataForFirestoreNew()
+                self.sc = 0
+            }else{
+                self.ChangeMyNew()
+                self.sc = 0
+            }
+            
+        })
+        
+        let defaultAction_2: UIAlertAction = UIAlertAction(title: "欲しい数順", style: UIAlertAction.Style.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            
+            if(self.mynum == 0){
+                self.GetIdeaDataForFirestoreWant()
+                self.sc = 1
+            }else{
+                self.ChangeMyWant()
+                self.sc = 1
+            }
+            
+        })
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("cancelAction")
+        })
+
+
+         alert.addAction(cancelAction)
+         alert.addAction(defaultAction_1)
+        alert.addAction(defaultAction_2)
+
+        present(alert, animated: true, completion: nil)
+    }
+    // "編集"ボタンが押された時の処理
+    @objc func editBarButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title:nil, message:  "オプション", preferredStyle: .alert)
+        let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
+            if Auth.auth().currentUser != nil {
+                do {
+                    try Auth.auth().signOut()
+                    let storyboard: UIStoryboard = self.storyboard!
+                    let next = storyboard.instantiateViewController(withIdentifier: "ViewController")
+                    self.present(next, animated: true, completion: nil)
+                } catch let error as NSError {
+                    let dialog = UIAlertController(title: "ログアウト失敗", message: error.localizedDescription, preferredStyle: .alert)
+                    dialog.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(dialog, animated: true, completion: nil)
+                }
+            }
+        })
+        let defaultAction: UIAlertAction = UIAlertAction(title: "利用規約を読む", style: .default, handler:{
+            (action: UIAlertAction!) -> Void in
+            let url = URL(string: "https://termsandpolicy-sota-inc.netlify.app/")!
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        })
+        
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { (action) -> Void in
+        })
+        
+        alert.addAction(defaultAction)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
     //ここからViewDidLoad内の関数
+    
+    //スワイプ時に実行されるメソッド
+    @objc func getSwipe(_ sender: UISwipeGestureRecognizer) {
+        
+        hoshiibuttons.removeAll()
+
+        //スワイプ方向による実行処理をcase文で指定
+        switch sender.direction {
+        case .right:
+            //右スワイプ時に実行したい処理
+            if Genre == "アプリ"{
+                break
+            }
+            else if Genre == "日用品"{
+                self.ListSegmentedControl.selectedSegmentIndex = 0
+                Genre = "アプリ"
+                if(sc == 0){
+                    GetIdeaDataForFirestoreNew()
+                }else{
+                    GetIdeaDataForFirestoreWant()
+                }
+                mynum = 0
+            }
+            else if Genre == "その他"{
+                self.ListSegmentedControl.selectedSegmentIndex = 1
+                Genre = "日用品"
+                if(sc == 0){
+                    GetIdeaDataForFirestoreNew()
+                }else{
+                    GetIdeaDataForFirestoreWant()
+                }
+                mynum = 0
+            }
+            else {
+                self.ListSegmentedControl.selectedSegmentIndex = 2
+                Genre = "その他"
+                if(sc == 0){
+                    GetIdeaDataForFirestoreNew()
+                }else{
+                    GetIdeaDataForFirestoreWant()
+                }
+                mynum = 0
+            }
+        case .left:
+            //左スワイプ時に実行したい処理
+            if Genre == "アプリ"{
+                self.ListSegmentedControl.selectedSegmentIndex = 1
+                Genre = "日用品"
+                if(sc == 0){
+                    GetIdeaDataForFirestoreNew()
+                }else{
+                    GetIdeaDataForFirestoreWant()
+                }
+                mynum = 0
+            }
+            else if Genre == "日用品"{
+                self.ListSegmentedControl.selectedSegmentIndex = 2
+                Genre = "その他"
+                if(sc == 0){
+                    GetIdeaDataForFirestoreNew()
+                }else{
+                    GetIdeaDataForFirestoreWant()
+                }
+                mynum = 0
+            }
+            else if Genre == "その他"{
+                self.ListSegmentedControl.selectedSegmentIndex = 3
+                Genre = "MyApp"
+                if(sc == 0){
+                    ChangeMyNew()
+                }else{
+                    ChangeMyWant()
+                }
+                mynum = 1
+            }
+            else {
+                break
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    
+    
+    func AddButtonDesine(){
+        
+        // 角丸で親しみやすく
+        self.AddButton.layer.cornerRadius = self.AddButton.bounds.midY
+        // 押せそうにみえる影
+        self.AddButton.layer.shadowColor = UIColor.systemGray.cgColor
+        self.AddButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.AddButton.layer.shadowOpacity = 0.7
+        self.AddButton.layer.shadowRadius = 10
+        // グラデーションで強めのアピール (リサイズ非対応！）
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.AddButton.bounds
+        gradientLayer.cornerRadius = self.AddButton.bounds.midY
+        gradientLayer.colors = [UIColor.systemGray, UIColor.systemGray]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        self.AddButton.layer.insertSublayer(gradientLayer, at: 0)
+        
+    }
     
     //NavigationBarのログアウトボタンにユーザ名をセット
     func NameTextSet(){
@@ -83,8 +308,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 self.namestr = String(self.name.prefix(4))
                 self.LogoutButton.setTitle(self.namestr, for: .normal)
-                self.LogoutButton.setTitleColor(UIColor.white, for: .normal)
-                self.LogoutButton.contentHorizontalAlignment = .center
+                self.LogoutButton.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                //self.LogoutButton.contentHorizontalAlignment = .center
                 
             })
             
@@ -135,8 +360,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         GetBlockUser()
         GetReportIdea()
         
-        print(Genre)
-        
+
         
         if(mynum == 0){
             if(sc == 0){
@@ -153,6 +377,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         }
         
+        
+        self.hoshiibuttons.removeAll()
         self.tableView.reloadData()
     }
     
@@ -335,7 +561,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(IdeaTitleArray)
+        hoshiibuttons.removeAll()
         return IdeaTitleArray.count
     }
     
@@ -344,7 +570,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = IdeaTitleArray[indexPath.row]
-        
         
         for i in self.LikeIdArray{
             if(i == self.IdeaIdArray[indexPath.row]){
@@ -360,13 +585,19 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(sc == 0){
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    
                     cell.accessoryView = nil
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                    imgView.image = UIImage(named: "hoshii1")!
+                    //let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
+                    //imgView.image = UIImage(named: "hoshii1")!
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                    let image = UIImage(systemName: "flag.fill")
+                    let configuration =
+                    UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: iine.cgColor))
+                    imgView.preferredSymbolConfiguration = configuration
+                    imgView.image = image
+                    
                     cell.accessoryView = imgView
                     
                     
@@ -378,9 +609,19 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
                     
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                    imgView.image = UIImage(named: "hoshii1")!
-                    cell.accessoryView = imgView                }
+                    //let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
+                    //imgView.image = UIImage(named: "hoshii1")!
+                    
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                    let image = UIImage(systemName: "flag.fill")
+                    let configuration =
+                    UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: iine.cgColor))
+                    imgView.preferredSymbolConfiguration = configuration
+                    imgView.image = image
+                    
+                    cell.accessoryView = imgView
+                    
+                }
             }
             
         }else{
@@ -388,38 +629,61 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(sc == 0){
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                    imgView.image = UIImage(named: "hoshii3")!
+                    //let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
+                    //imgView.image = UIImage(named: "hoshii3")!
+                    
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                    let image = UIImage(systemName: "flag.fill")
+                    let configuration =
+                    UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: my.cgColor))
+                    imgView.preferredSymbolConfiguration = configuration
+                    imgView.image = image
+                    
                     cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "\(TimeArray[indexPath.row])　" + NameArray[indexPath.row]
                     
                     if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                        imgView.image = UIImage(named: "hoshii3")!
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                        let image = UIImage(systemName: "flag.fill")
+                        let configuration =
+                        UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: my.cgColor))
+                        imgView.preferredSymbolConfiguration = configuration
+                        imgView.image = image
                         cell.accessoryView = imgView
                     }else{
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                        imgView.image = UIImage(named: "hoshii2")!
-                        cell.accessoryView = imgView
+                        
+                        cell.accessoryView = nil
                     }
+                    
                 }
             }else{
                 if(mynum == 1){
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　\(IdeaGenreArray[indexPath.row])"
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                    imgView.image = UIImage(named: "hoshii3")!
+                    //let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
+                    //imgView.image = UIImage(named: "hoshii3")!
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                    let image = UIImage(systemName: "flag.fill")
+                    let configuration =
+                    UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: my.cgColor))
+                    imgView.preferredSymbolConfiguration = configuration
+                    imgView.image = image
+                    
                     cell.accessoryView = imgView
                 }else{
                     cell.detailTextLabel?.text = "欲しい数：\(LikeNumArray[indexPath.row])　" + NameArray[indexPath.row]
+                    
                     if(Auth.auth().currentUser?.uid ?? "test" == NameIDArray[indexPath.row]){
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                        imgView.image = UIImage(named: "hoshii3")!
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 25))
+                        let image = UIImage(systemName: "flag.fill")
+                        let configuration =
+                        UIImage.SymbolConfiguration(hierarchicalColor: .init(cgColor: my.cgColor))
+                        imgView.preferredSymbolConfiguration = configuration
+                        imgView.image = image
                         cell.accessoryView = imgView
                     }else{
-                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 23, height: 32))
-                        imgView.image = UIImage(named: "hoshii2")!
-                        cell.accessoryView = imgView
+                        
+                        cell.accessoryView = nil
                     }
                 }
             }
@@ -431,17 +695,36 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.textLabel?.font = UIFont(name: "Arial", size: 20)
         cell.detailTextLabel?.font = UIFont(name: "Arial", size: 13)
         cell.detailTextLabel?.textColor = UIColor.lightGray
-        
         self.temp = 0
+        
+        /*
+        // UIButton
+        let addbutton = UIButton()
+        addbutton.tag = indexPath.row
+        // 押下時動作
+        addbutton.frame = CGRect(x:self.view.frame.size.width-50, y:20, width:40, height: 40)
+        addbutton.setImage(nil, for: .normal)
+        addbutton.setImage(UIImage(systemName: "lightbulb.fill"), for: .normal)
+        hoshiibuttons.append(addbutton)
+        cell.addSubview(addbutton)
+        addbutton.addTarget(nil, action: #selector(buttonEvent), for: .touchUpInside)
         return cell
+        */
+    
+        return cell
+    }
+    
+    @objc func buttonEvent(_ sender: UIButton) {
+        let row = sender.tag
+        print(row)
+        hoshiibuttons[row].setImage(nil, for: .normal)
+        hoshiibuttons[row].setImage(UIImage(systemName: "heart"), for: .normal)
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
-    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -494,7 +777,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBAction func tapLogoutButton(_ sender: Any) {
-        let alert = UIAlertController(title:nil, message:  "操作を選んでください", preferredStyle: .alert)
+        let alert = UIAlertController(title:nil, message:  "オプション", preferredStyle: .alert)
         let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
             if Auth.auth().currentUser != nil {
                 do {
@@ -521,11 +804,56 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         })
         
         alert.addAction(defaultAction)
-        alert.addAction(delete) 
+        alert.addAction(delete)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
     }
     
+    
+    
+    @IBAction func ChageList(){
+
+        let alert: UIAlertController = UIAlertController(title: nil, message:nil, preferredStyle:  UIAlertController.Style.actionSheet)
+        
+
+        let defaultAction_1: UIAlertAction = UIAlertAction(title: "新着順", style: UIAlertAction.Style.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            
+            if(self.mynum == 0){
+                self.GetIdeaDataForFirestoreNew()
+                self.sc = 0
+            }else{
+                self.ChangeMyNew()
+                self.sc = 0
+            }
+            
+        })
+        
+        let defaultAction_2: UIAlertAction = UIAlertAction(title: "欲しい数順", style: UIAlertAction.Style.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            
+            if(self.mynum == 0){
+                self.GetIdeaDataForFirestoreWant()
+                self.sc = 1
+            }else{
+                self.ChangeMyWant()
+                self.sc = 1
+            }
+            
+        })
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("cancelAction")
+        })
+
+
+         alert.addAction(cancelAction)
+         alert.addAction(defaultAction_1)
+        alert.addAction(defaultAction_2)
+
+        present(alert, animated: true, completion: nil)
+    }
     
     
     
@@ -575,6 +903,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     
+    
+    /*
     @IBAction func changeOrderControl(_ sender: UISegmentedControl){
         switch sender.selectedSegmentIndex {
         case 0:
@@ -604,7 +934,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
     }
-    
+    */
     
     
     func GetIdeaDataForFirestoreNew() {

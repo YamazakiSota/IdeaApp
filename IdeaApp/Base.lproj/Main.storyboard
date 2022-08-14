@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,9 +30,9 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="新規登録" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvP-BD-hzF">
                                         <rect key="frame" x="34" y="22" width="222" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.9979862571" green="0.93347030880000004" blue="0.71144556999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="20"/>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" red="0.34901960784313724" green="0.19215686274509802" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ユーザ名(4文字以内)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h73-E3-MPx">
@@ -51,6 +52,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfv-Ma-L73">
                                         <rect key="frame" x="70" y="194" width="102" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="0.0" green="0.38809992991337161" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="利用規約">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
@@ -63,7 +65,7 @@
                                         <rect key="frame" x="160" y="200" width="82" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.34901960784313724" green="0.19215686274509802" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOZ-we-iQw">
@@ -82,7 +84,7 @@
                                         <state key="normal" title="ログイン"/>
                                         <buttonConfiguration key="configuration" style="plain" title="新規登録" cornerStyle="capsule">
                                             <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.94290846589999999" green="0.67426449060000004" blue="0.1374052167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.95294117647058818" green="0.68627450980392157" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </backgroundConfiguration>
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -92,7 +94,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="H0s-Vt-7nW"/>
                                     <constraint firstAttribute="height" constant="287" id="JK7-C6-RoU"/>
@@ -116,9 +118,9 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ログイン" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qch-JW-YZa">
                                         <rect key="frame" x="34" y="22" width="222" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.9979862571" green="0.93347030880000004" blue="0.71144556999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="20"/>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" red="0.34901960784313724" green="0.19215686274509802" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wge-mu-PuW">
@@ -142,7 +144,7 @@
                                         <state key="normal" title="ログイン"/>
                                         <buttonConfiguration key="configuration" style="plain" title="ログイン" cornerStyle="capsule">
                                             <backgroundConfiguration key="background">
-                                                <color key="backgroundColor" red="0.94290846589999999" green="0.67426449060000004" blue="0.1374052167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.95294117647058818" green="0.68627450980392157" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </backgroundConfiguration>
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -152,7 +154,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="KJv-IM-X8m"/>
                                     <constraint firstAttribute="height" constant="197" id="U0a-1O-hWk"/>
@@ -160,7 +162,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="McM-yf-pFh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Y5-bc-a7i"/>
                             <constraint firstItem="vfp-hj-Utq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FgK-aX-Wwj"/>
@@ -195,7 +197,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QTM-iP-yfg">
-                                <rect key="frame" x="0.0" y="176" width="414" height="633"/>
+                                <rect key="frame" x="0.0" y="142" width="414" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <edgeInsets key="layoutMargins" top="20" left="20" bottom="8" right="8"/>
@@ -243,12 +245,12 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="yXv-sy-Dw1">
-                                <rect key="frame" x="336" y="733" width="48" height="48"/>
+                                <rect key="frame" x="336" y="761" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="＋" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.93725490196078431" green="0.67450980392156867" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.8784313725490196" green="0.31372549019607843" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="23"/>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="1" bottom="0.0" trailing="0.0"/>
@@ -258,48 +260,35 @@
                                     <segue destination="7FW-ii-IGK" kind="show" id="z3m-IY-cFJ"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vdf-oy-4yc">
-                                <rect key="frame" x="134.5" y="137" width="145" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="145" id="GY2-6u-dwZ"/>
-                                    <constraint firstAttribute="height" constant="31" id="Rnx-R2-hcl"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="新着順"/>
-                                    <segment title="ほしい順"/>
-                                </segments>
-                                <connections>
-                                    <action selector="changeOrderControl:" destination="857-US-h7C" eventType="valueChanged" id="qiE-pi-k28"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Vyz-bI-QlL"/>
-                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.81176470588235294" green="0.91764705882352937" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Vdf-oy-4yc" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="PRJ-YH-edp"/>
                             <constraint firstItem="ECm-HE-DS1" firstAttribute="top" secondItem="Vyz-bI-QlL" secondAttribute="top" constant="15" id="jpJ-wc-29g"/>
-                            <constraint firstItem="Vdf-oy-4yc" firstAttribute="top" secondItem="ECm-HE-DS1" secondAttribute="bottom" constant="3" id="mIs-h0-vEl"/>
                             <constraint firstItem="ECm-HE-DS1" firstAttribute="centerX" secondItem="QvO-Np-18a" secondAttribute="centerX" id="p7a-LE-fD9"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Bxy-Vq-Q9D">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="q1v-jD-iGj">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="gUp-Oh-QDZ">
-                                <rect key="frame" x="304" y="4.5" width="90" height="35"/>
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="q1v-jD-iGj">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="gUp-Oh-QDZ">
+                                <rect key="frame" x="20" y="4.5" width="127.5" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.93725490196078431" green="0.67450980392156867" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </backgroundConfiguration>
-                                    <attributedString key="attributedTitle"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="tapLogoutButton:" destination="857-US-h7C" eventType="touchUpInside" id="Zlo-sn-7fa"/>
-                                </connections>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button" image="gearshape" catalog="system">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Button">
+                                            <attributes>
+                                                <font key="NSFont" size="12" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <buttonConfiguration key="configuration" style="plain"/>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -308,14 +297,13 @@
                         <outlet property="AddButton" destination="yXv-sy-Dw1" id="Uip-g9-h5f"/>
                         <outlet property="ListSegmentedControl" destination="ECm-HE-DS1" id="OEP-LS-kII"/>
                         <outlet property="LogoutButton" destination="gUp-Oh-QDZ" id="TBE-3P-067"/>
-                        <outlet property="OrderSegmentedControl" destination="Vdf-oy-4yc" id="OmU-iR-XHR"/>
                         <outlet property="tableView" destination="QTM-iP-yfg" id="14K-4s-2dR"/>
                         <segue destination="rOn-Iu-54S" kind="show" identifier="toEditViewController" id="vD4-fE-8DM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzs-Fe-vAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3693" y="110"/>
+            <point key="canvasLocation" x="3692.753623188406" y="109.82142857142857"/>
         </scene>
         <!--Add View Controller-->
         <scene sceneID="NvP-18-TBa">
@@ -325,26 +313,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="uxB-c0-mxk"/>
-                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.94911978641354156" green="0.95799065811797401" blue="0.91135424582454316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Soi-9W-BBL">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="QoX-1h-FLS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="xGp-Gb-BeV">
                                 <rect key="frame" x="302" y="4.5" width="92" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.72189551590000001" green="0.85096973180000002" blue="0.9995527864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
+                                <buttonConfiguration key="configuration" style="plain" title="投稿" cornerStyle="capsule">
+                                    <imageReference key="image" image="pencil" catalog="system" symbolScale="small"/>
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.064915925259999993" green="0.43058422210000002" blue="0.89923638110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.95469003919999995" green="0.68600022790000004" blue="0.25894019010000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="投稿">
-                                            <attributes>
-                                                <font key="NSFont" size="18" name="HiraginoSans-W3"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="16"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -369,7 +352,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Zb7-J3-O4N"/>
-                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="9W1-mW-iT9">
@@ -377,21 +360,14 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="6sF-kn-Nn8">
                                 <rect key="frame" x="298" y="4.5" width="96" height="35.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
+                                <buttonConfiguration key="configuration" style="plain" title="共有" cornerStyle="capsule">
+                                    <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="small"/>
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.067604273559999997" green="0.43058344720000002" blue="0.89923554660000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.95469003919999995" green="0.68600022790000004" blue="0.25894019010000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="共有">
-                                            <attributes>
-                                                <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" metaFont="system" size="18"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="16"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="TapShareButton" destination="rOn-Iu-54S" eventType="touchUpInside" id="j2w-ko-cDb"/>
@@ -432,16 +408,16 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-Gs-GZ4">
-                                <rect key="frame" x="57" y="693" width="300" height="45"/>
+                                <rect key="frame" x="107" y="693" width="200" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="GeP-aW-Zy8"/>
-                                    <constraint firstAttribute="height" constant="45" id="mSv-Hf-SQe"/>
+                                    <constraint firstAttribute="height" constant="45" id="W5H-nm-pAo"/>
+                                    <constraint firstAttribute="width" constant="200" id="wSo-tb-PIQ"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="メインに戻る" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.87357980010000003" green="0.31109476089999999" blue="0.41937386989999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.8784313725490196" green="0.31372549019607843" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                                 </buttonConfiguration>
@@ -458,7 +434,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="AppStoreでみる" cornerStyle="capsule">
+                                <buttonConfiguration key="configuration" style="tinted" title="AppStoreで見る" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
                                         <color key="backgroundColor" red="0.59635502100000004" green="0.83958095310000003" blue="0.85272341969999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
@@ -524,23 +500,23 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lJI-Ws-1WI"/>
-                        <color key="backgroundColor" red="0.99415355920000004" green="0.93347829579999997" blue="0.71147978310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.81090253590000005" green="0.91781371830000003" blue="0.93471974130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="mxd-Gs-GZ4" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="1Hv-4j-5NL"/>
                             <constraint firstItem="Jqh-zv-VDB" firstAttribute="top" secondItem="49L-Cq-rDf" secondAttribute="bottom" constant="10" id="4OK-ab-O41"/>
                             <constraint firstItem="fHu-QQ-rFL" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="8Bf-Vf-fgJ"/>
                             <constraint firstItem="ReI-E0-4Mj" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="BAu-M7-1hs"/>
                             <constraint firstItem="49L-Cq-rDf" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="CpC-dn-Ffu"/>
                             <constraint firstItem="ReI-E0-4Mj" firstAttribute="top" secondItem="VlT-Sr-Qby" secondAttribute="bottom" constant="15" id="MAd-vz-LFj"/>
-                            <constraint firstItem="lJI-Ws-1WI" firstAttribute="bottom" secondItem="mxd-Gs-GZ4" secondAttribute="bottom" constant="75" id="N0B-0Q-6Hq"/>
                             <constraint firstItem="Jqh-zv-VDB" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="Y5C-ly-cWt"/>
                             <constraint firstItem="49L-Cq-rDf" firstAttribute="centerY" secondItem="4FH-un-Nu0" secondAttribute="centerY" constant="-150" id="c6d-t7-ZhL"/>
                             <constraint firstItem="OBQ-pk-MBz" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="eR7-p9-nL4"/>
                             <constraint firstItem="OBQ-pk-MBz" firstAttribute="top" secondItem="Jqh-zv-VDB" secondAttribute="bottom" constant="10" id="eno-D5-2h1"/>
                             <constraint firstItem="fHu-QQ-rFL" firstAttribute="top" secondItem="39t-g5-Chc" secondAttribute="bottom" constant="10" id="f1B-DP-qS0"/>
                             <constraint firstItem="39t-g5-Chc" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="frj-sc-VXg"/>
+                            <constraint firstItem="lJI-Ws-1WI" firstAttribute="bottom" secondItem="mxd-Gs-GZ4" secondAttribute="bottom" constant="75" id="pe4-Wf-SrP"/>
                             <constraint firstItem="39t-g5-Chc" firstAttribute="top" secondItem="VlT-Sr-Qby" secondAttribute="bottom" constant="30" id="qfW-zs-wkO"/>
                             <constraint firstItem="VlT-Sr-Qby" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="u9D-iP-nYg"/>
-                            <constraint firstItem="mxd-Gs-GZ4" firstAttribute="centerX" secondItem="4FH-un-Nu0" secondAttribute="centerX" id="yLB-EF-NIJ"/>
                             <constraint firstItem="VlT-Sr-Qby" firstAttribute="centerY" secondItem="4FH-un-Nu0" secondAttribute="centerY" constant="-140" id="yii-0Y-LEc"/>
                         </constraints>
                     </view>
@@ -581,8 +557,14 @@
     </scenes>
     <resources>
         <image name="attaraiina" width="1558" height="644"/>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="haikei" width="639" height="767"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>

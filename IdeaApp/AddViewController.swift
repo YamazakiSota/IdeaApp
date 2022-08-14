@@ -31,7 +31,7 @@ class AddViewController:FormViewController{
         super.viewDidLoad()
         
         
-        //tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 207/255, green: 234/255, blue: 238/255, alpha: 1)
         
         let year = calendar.component(.year, from: date) // 3
         let month = calendar.component(.month, from: date) // 3
@@ -50,7 +50,7 @@ class AddViewController:FormViewController{
             self.IdeaTitle = row.value ?? "IdeaTitle"//変数に格納
         }
         <<< TextAreaRow { row in
-            row.placeholder = "詳細を入力"
+            row.placeholder = "詳細を入力(4行まで)"
         }.onChange{ row in
             self.IdeaDetail = row.value ?? "IdeaDetail"//変数に格納
         }

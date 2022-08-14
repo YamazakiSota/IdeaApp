@@ -26,6 +26,7 @@ class EditViewController: FormViewController {
     var LikeNumArray: Int!
     var ReportNumArray: Int!
     var UserLikeId: String = ""
+    var Detailstr: String = ""
     var TimeArray: String = ""
     var tem: Int = 0
     var UserName: String!
@@ -36,6 +37,7 @@ class EditViewController: FormViewController {
     var ReportIdeaArray: [String] = []
     var ReportIdeaIDArray: [String] = []
     var commentId: [String] = []
+    
     
     var k = 0
     var tag = 0
@@ -48,7 +50,7 @@ class EditViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor(red: 254/255, green: 238/255, blue: 181/255, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 207/255, green: 234/255, blue: 238/255, alpha: 1)
         
 
         
@@ -70,7 +72,12 @@ class EditViewController: FormViewController {
                 row.title = "\(self.IdeaTitle!)"
             }
             <<< TextAreaRow { row in
-                row.placeholder = "\(self.IdeaDetail!)"
+                self.Detailstr = String(self.IdeaDetail.prefix(80))
+                if(self.IdeaDetail.count > 80){
+                    row.placeholder = "\(self.Detailstr)..."
+                }else{
+                    row.placeholder = "\(self.Detailstr)"
+                }
                 row.disabled = true
             }.cellSetup{ cell, row in
                 cell.placeholderLabel?.textColor = .darkGray
@@ -251,7 +258,12 @@ class EditViewController: FormViewController {
                 row.tag = "\(self.IdeaTitle!)"
             }
             <<< TextAreaRow { row in
-                row.placeholder = "\(self.IdeaDetail!)"
+                self.Detailstr = String(self.IdeaDetail.prefix(80))
+                if(self.IdeaDetail.count > 80){
+                    row.placeholder = "\(self.Detailstr)..."
+                }else{
+                    row.placeholder = "\(self.Detailstr)"
+                }
                 row.disabled = true
             }.cellSetup{ cell, row in
                 cell.placeholderLabel?.textColor = .darkGray
@@ -445,6 +457,12 @@ class EditViewController: FormViewController {
                     print(commentArray)
                     for option in commentArray {
                         self.form.last! <<< TextAreaRow(option){ listRow in
+                            if(commentnameArray[self.k].count > 80){
+                                commentnameArray[self.k] = String(commentnameArray[self.k].prefix(80))
+                                listRow.placeholder = option + "\n投稿者：\(commentnameArray[self.k])"
+                            }else{
+                                listRow.placeholder = option + "\n投稿者：\(commentnameArray[self.k])"
+                            }
                             listRow.placeholder = option + "\n投稿者：\(commentnameArray[self.k])"
                             listRow.disabled = true
                             listRow.tag = "\(self.tag)"

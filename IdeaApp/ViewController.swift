@@ -47,8 +47,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Loginview.layer.cornerRadius = 30
-        Registerview.layer.cornerRadius = 30
+        Loginview.layer.cornerRadius = 10
+        Registerview.layer.cornerRadius = 10
         CheckButton.layer.borderWidth = 2
         CheckButton.layer.borderColor = UIColor.gray.cgColor
 

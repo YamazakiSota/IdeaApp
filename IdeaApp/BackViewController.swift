@@ -109,12 +109,12 @@ class BackViewController: UIViewController {
          self.view.addSubview(imageView)
         
         
-
+/*
             bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
             bannerView.adUnitID = "ca-app-pub-5041739959288046/6354834758"
             bannerView.rootViewController = self
             bannerView.load(GADRequest())
-            addBannerViewToView(bannerView)
+            addBannerViewToView(bannerView)*/
         
         
     }
