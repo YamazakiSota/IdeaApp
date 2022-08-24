@@ -153,7 +153,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         present(alert, animated: true, completion: nil)
     }
-    // "編集"ボタンが押された時の処理
+    // "設定"ボタンが押された時の処理
     @objc func editBarButtonTapped(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title:nil, message:  "オプション", preferredStyle: .alert)
         let delete = UIAlertAction(title: "ログアウトする", style: .destructive, handler: { (action) -> Void in
@@ -187,7 +187,6 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.present(alert, animated: true, completion: nil)
     }
     
-    //ここからViewDidLoad内の関数
     
     //スワイプ時に実行されるメソッド
     @objc func getSwipe(_ sender: UISwipeGestureRecognizer) {
