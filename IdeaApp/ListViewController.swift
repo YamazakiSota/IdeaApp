@@ -83,6 +83,7 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         //AddButtonDesine()
         
+        
         //左スワイプ
         let leftSwipeGesture = UISwipeGestureRecognizer(
                 target: self,
