@@ -81,6 +81,8 @@ class ListViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //BannerSet()
         self.tableView.reloadData()
         
+        
+        
         //AddButtonDesine()
         
         
